@@ -87,7 +87,7 @@ exports.transfer = async (req, res, next) => {
 
 /**
  *  @desc all user debit and credit transactions
- *  @route POST /api/v1/transaction/usertransactions
+ *  @route GET /api/v1/transaction/usertransactions
  *  @access Private
  */
 
