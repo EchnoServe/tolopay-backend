@@ -69,15 +69,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// const newuser = new user({
-//   name: "yonas",
-//   email: "yonas@gmail.com",
-//   password: "1234@1234",
-//   passwordConfirm: "1234@1234",
-// });
-
-// newuser.save();
-
 userSchema.virtual("creditTransactions", {
   ref: "creditTransaction",
   foreignField: "user_id",

@@ -7,7 +7,7 @@ const { error } = require("./middleware/error");
 const userRouter = require("./routes/userRouter");
 const transactionRouter = require("./routes/transactionRouter");
 
-app = express();
+const app = express();
 
 app.use(express.json());
 
