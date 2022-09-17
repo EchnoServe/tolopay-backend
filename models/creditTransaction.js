@@ -9,11 +9,15 @@ const transactionSchema = new mongoose.Schema({
   remark: {
     type: String,
   },
-  data: Date,
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
   receiver_user: String,
   transferAmount: Number,
   previousAmount: Number,
   remainingAmount: Number,
+  type: String,
 });
 
 const creditTransactionModel = mongoose.model(

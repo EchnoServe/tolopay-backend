@@ -5,7 +5,10 @@ const transactionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
-  data: Date,
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
   send_user: String,
   transferAmount: Number,
   previousAmount: Number,
