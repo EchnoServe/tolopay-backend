@@ -3,6 +3,7 @@ require("express-async-errors");
 const express = require("express");
 const mongoose = require("mongoose");
 
+const { error } = require("./middleware/error");
 const userRouter = require("./routes/userRouter");
 const transactionRouter = require("./routes/transactionRouter");
 
@@ -22,12 +23,7 @@ mongoose
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/transaction", transactionRouter);
 
-app.use((err, req, res, next) => {
-  //check status code
-  res.status(404).json({
-    message: err.message,
-  });
-});
+app.use(error);
 
 const PORT = process.env.PORT || 8000;
 app.listen(8000, () => {
