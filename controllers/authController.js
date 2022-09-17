@@ -8,6 +8,12 @@ const signToken = (id) => {
   });
 };
 
+/**
+ *  @desc  create account
+ *  @route POST /api/v1/users/signup
+ *  @access Public
+ */
+
 exports.signup = async (req, res, next) => {
   const { name, email, password, passwordConfirm, phoneNumber } = req.body;
 
@@ -30,25 +36,35 @@ exports.signup = async (req, res, next) => {
   });
 };
 
+/**
+ *  @desc  login
+ *  @route POST /api/v1/users/login
+ *  @access Public
+ */
+
 exports.login = async (req, res, next) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    return next(new Error("provide email and password"));
+    if (!email || !password) {
+      return next(new Error("provide email and password"));
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return next(new Error("incorrect email or password"));
+    }
+
+    const token = signToken(user._id);
+    res.status(200).json({
+      status: "OK",
+      data: {
+        token,
+        user: user._id,
+      },
+    });
+  } catch (ex) {
+    next(ex);
   }
-
-  const user = await User.findOne({ email }).select("+password");
-
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return next(new Error("incorrect email or password"));
-  }
-
-  const token = signToken(user._id);
-  res.status(200).json({
-    status: "OK",
-    data: {
-      token,
-      user: user._id,
-    },
-  });
 };
