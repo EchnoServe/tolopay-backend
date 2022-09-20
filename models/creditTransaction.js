@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const user = require("./user");
 
 const transactionSchema = new mongoose.Schema({
   user_id: {
