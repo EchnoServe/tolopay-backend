@@ -5,7 +5,6 @@ const CreditTransaction = require("./../models/creditTransaction");
 const DebitTransaction = require("./../models/debitTransaction");
 const user = require("./../models/user");
 
-//when two companies transact with one another say Company A buys something from Company B then Company A will record a decrease in cash (a Credit), and Company B will record an increase in cash (a Debit).
 // TODO : status code  ! status
 
 /**
@@ -15,27 +14,24 @@ const user = require("./../models/user");
  */
 
 exports.transfer = async (req, res, next) => {
-  //TODO: transfer by account number or phone number
-
-  //check if the user input all fields
   const user = req.user;
-  const { receiver_user_email, amount, password, remark } = req.body;
-  if (!receiver_user_email || !amount || !password) {
+  const { phoneNumber, amount, password, remark } = req.body;
+  if (!phoneNumber || !amount || !password) {
     return next(new Error("Please enter the fields in your form correctly"));
   }
 
-  //check if  a given  receiver exists
-  const receiver_user = await User.findOne({ email: receiver_user_email });
+  const receiver_user = await User.findOne({
+    phoneNumber,
+  });
   if (!receiver_user) {
-    return next(new Error("Please enter correct email "));
+    return next(new Error("Please enter correct phoneNumber"));
   }
-  //?// check the user  balance is good
-  //if a user has not enough balance to send
+
   if (user.balance < amount) {
     return next(new Error("your balance is not enough"));
   }
 
-  //TODO: wrong password  attempts
+  //TODO:: wrong password  attempts
 
   //validate the password is correct
   if (!(await bcrypt.compare(password, user.password))) {
@@ -92,7 +88,7 @@ exports.transfer = async (req, res, next) => {
  */
 
 exports.usertransactions = async (req, res, next) => {
-  //TODO:multiple populate may decrease performance ?aggregate
+  //TODO:multiple populate || aggregate
 
   const user = await User.findById(req.user.id)
     .populate("creditTransactions")
