@@ -31,7 +31,7 @@ exports.transfer = async (req, res, next) => {
     return next(new Error("your balance is not enough"));
   }
 
-  //TODO: wrong password  attempts
+  //TODO:: wrong password  attempts
 
   //validate the password is correct
   if (!(await bcrypt.compare(password, user.password))) {
