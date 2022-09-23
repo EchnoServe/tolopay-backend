@@ -20,7 +20,7 @@ const transactionSchema = new mongoose.Schema({
   },
   transferAmount: Number,
   previousAmount: Number,
-  remainingAmount: Number,
+  currentAmount: Number,
   type: String,
 });
 
@@ -28,13 +28,5 @@ const creditTransactionModel = mongoose.model(
   "creditTransaction",
   transactionSchema
 );
-
-transactionSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "receiver_user",
-    select: "name",
-  });
-  next();
-});
 
 module.exports = creditTransactionModel;
