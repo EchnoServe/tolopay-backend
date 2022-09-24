@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
@@ -25,7 +24,6 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
       default: "user",
     },
     age: {
@@ -35,6 +33,9 @@ const userSchema = new mongoose.Schema(
       type: Number,
       unique: true,
     },
+    profilePic: {
+        type: String,
+    }
   },
   {
     toJSON: { virtuals: true },
@@ -54,5 +55,5 @@ userSchema.virtual("debitTransactions", {
   localField: "_id",
 });
 
-const user = mongoose.model("user", userSchema);
-module.exports = user;
+const userSocial = mongoose.model("userSocial", userSchema);
+module.exports = userSocial;
