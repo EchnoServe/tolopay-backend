@@ -12,9 +12,19 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 1000,
     },
+    username: {
+      type: Number,
+      unique: true,
+      lowercase: true,
+    },
     active: {
       type: Boolean,
       default: true,
+    },
+    budget: {
+      type: Array,
+      label: String,
+      amount: String,
     },
     email: {
       type: String,
