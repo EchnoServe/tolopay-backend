@@ -10,4 +10,33 @@ exports.me = async (req, res, next) => {
     },
   });
 };
-//TODO : update profile
+//TODO : update profile ->image
+
+/**
+ *  @desc  save budget and planning
+ *  @route PUT  /api/v1/users/addbudget
+ *  @access Private
+ */
+
+exports.addBudget = async (req, res, next) => {
+  if (!req.body) {
+    return next(new Error("Please enter the fields in your form correctly"));
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      $push: { budget: req.body },
+    },
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json({
+    status: "OK",
+    data: {
+      user,
+    },
+  });
+};
