@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
+
 router.get("/me", protect, userController.me);
 
 router.put("/addbudget", protect, userController.addBudget);
@@ -19,5 +20,10 @@ router.post(
   upload.single("profileimage"),
   userController.profileImage
 );
+
+router.get("logout", authController.logout);
+
+router.get("/google", authController.loginWithGoogle);
+
 
 module.exports = router;
