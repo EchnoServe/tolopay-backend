@@ -15,7 +15,7 @@ const DebitTransaction = require("./../models/debitTransaction");
 exports.transfer = async (req, res, next) => {
   const user = req.user;
   const { phoneNumber, amount, password, remark } = req.body;
-  if (!phoneNumber || !amount || !password) {
+  if (!phoneNumber || !amount || !password || !remark) {
     return next(new Error("Please enter the fields in your form correctly"));
   }
 
@@ -32,6 +32,15 @@ exports.transfer = async (req, res, next) => {
   }
 
   //TODO:: wrong password  attempts
+
+  for (const item of user.budget) {
+    if (item.remark === remark) {
+      item.amount = item.amount > amount ? item.amount - amount : 0;
+    }
+  }
+  user.budget.push({ remark, amount, budgeted: false });
+
+  user.save({ validateBeforeSave: false });
 
   //validate the password is correct
   if (!(await bcrypt.compare(password, user.password))) {
