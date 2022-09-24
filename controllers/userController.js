@@ -41,6 +41,12 @@ exports.addBudget = async (req, res, next) => {
   });
 };
 
+/**
+ *  @desc  upload a user profile image
+ *  @route PUT  /api/v1/users/profileimage
+ *  @access Private
+ */
+
 exports.profileImage = async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     req.user.id,
