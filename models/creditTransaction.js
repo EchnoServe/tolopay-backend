@@ -1,32 +1,49 @@
 const mongoose = require("mongoose");
 
-const transactionSchema = new mongoose.Schema({
+const creditTransactionSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    require: true,
-  },
-  remark: {
-    type: String,
   },
   createdAt: {
     type: Date,
     default: new Date(),
   },
-  receiver_user: {
+  remark: {
+    type: String,
+    require: true,
+  },
+  send_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     require: true,
   },
-  transferAmount: Number,
-  previousAmount: Number,
-  currentAmount: Number,
+  transferAmount: {
+    type: Number,
+    require: true,
+  },
+  previousAmount: {
+    type: Number,
+    require: true,
+  },
+  currentAmount: {
+    type: Number,
+    require: true,
+  },
   type: String,
+});
+
+creditTransactionSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "send_user",
+    select: "name",
+  });
+  next();
 });
 
 const creditTransactionModel = mongoose.model(
   "creditTransaction",
-  transactionSchema
+  creditTransactionSchema
 );
 
 module.exports = creditTransactionModel;

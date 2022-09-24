@@ -1,31 +1,42 @@
 const mongoose = require("mongoose");
 
-const transactionSchema = new mongoose.Schema({
+const debitTransactionSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
+    require: true,
+  },
+  remark: {
+    type: String,
+    require: true,
   },
   createdAt: {
     type: Date,
     default: new Date(),
   },
-  remark: {
-    type: String,
-  },
-  send_user: {
+  receiver_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     require: true,
   },
-  transferAmount: Number,
-  previousAmount: Number,
-  currentAmount: Number,
+  transferAmount: {
+    type: Number,
+    require: true,
+  },
+  previousAmount: {
+    type: Number,
+    require: true,
+  },
+  currentAmount: {
+    type: Number,
+    require: true,
+  },
   type: String,
 });
 
-transactionSchema.pre(/^find/, function (next) {
+debitTransactionSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "send_user",
+    path: "receiver_user",
     select: "name",
   });
   next();
@@ -33,7 +44,7 @@ transactionSchema.pre(/^find/, function (next) {
 
 const debitTransactionModel = mongoose.model(
   "debitTransaction",
-  transactionSchema
+  debitTransactionSchema
 );
 
 module.exports = debitTransactionModel;
