@@ -21,11 +21,13 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    budget: {
-      type: Array,
-      label: String,
-      amount: String,
-    },
+    budget: [
+      {
+        remark: { type: String, trim: true },
+        amount: String,
+        budgeted: { type: Boolean, default: true },
+      },
+    ],
     email: {
       type: String,
       required: [true, "please provide your email"],
