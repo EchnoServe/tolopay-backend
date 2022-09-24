@@ -8,7 +8,6 @@ const userRouter = require("./routes/userRouter");
 const transactionRouter = require("./routes/transactionRouter");
 
 const app = express();
-
 dotenv.config();
 
 mongoose
@@ -19,6 +18,9 @@ mongoose
   .then(() => {
     console.log("> DB connection successful ! ");
   });
+
+app.use("/tolopayprofiles", express.static("tolopayprofiles"));
+
 app.use(express.json());
 app.use(cors());
 app.use("/api/v1/users", userRouter);
