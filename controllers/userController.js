@@ -40,3 +40,22 @@ exports.addBudget = async (req, res, next) => {
     },
   });
 };
+
+exports.profileImage = async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      profileimage: req.file.path,
+    },
+    {
+      new: true,
+    }
+  ).select("name username profileimage");
+
+  res.status(200).json({
+    status: "OK",
+    data: {
+      user,
+    },
+  });
+};
