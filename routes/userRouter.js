@@ -3,6 +3,7 @@ const { protect } = require("../middleware/protect");
 const authController = require("./../controllers/authController");
 const userController = require("./../controllers/userController");
 const upload = require("./../middleware/muter");
+const passport = require("passport");
 
 const router = express.Router();
 
