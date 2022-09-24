@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    profileimage: String,
     active: {
       type: Boolean,
       default: true,
