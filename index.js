@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 const { error } = require("./middleware/error");
 const userRouter = require("./routes/userRouter");
 const transactionRouter = require("./routes/transactionRouter");
-const passportSetup = require("./config/passport.setup");
+require("./config/passport.setup");
 
 const app = express();
 

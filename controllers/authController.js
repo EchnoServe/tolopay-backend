@@ -71,9 +71,9 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.loginWithGoogle = () => passport.authenticate("google", {
-  scope: ['profile']
-});
+// exports.loginWithGoogle = () => {
+//   return ;
+// }
 
 exports.logout = async (req, res, next) => {
 
