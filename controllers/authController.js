@@ -45,10 +45,7 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    console.log(req.body);
-    // const credentials  = JSON.parse(req.body);
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       return next(new Error("provide email and password"));
