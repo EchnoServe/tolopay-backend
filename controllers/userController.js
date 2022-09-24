@@ -1,5 +1,11 @@
 const User = require("./../models/user");
 
+/**
+ *  @desc  user profile
+ *  @route PUT  /api/v1/users/me
+ *  @access Private
+ */
+
 exports.me = async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
@@ -10,7 +16,6 @@ exports.me = async (req, res, next) => {
     },
   });
 };
-//TODO : update profile ->image
 
 /**
  *  @desc  save budget and planning
