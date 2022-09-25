@@ -72,6 +72,20 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.loginWithGoogle = async (req, res, next) => {
+
+  const user = req.user;
+  
+  const token = signToken(user._id);
+    res.status(200).json({
+      status: "OK",
+      data: {
+        token,
+        user: user._id,
+      },
+    });
+}
+
 exports.logout = async (req, res, next) => {
   res.send("logging out");
 };

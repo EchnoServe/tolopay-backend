@@ -4,15 +4,29 @@ const mongoose = require("mongoose");
 
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const expressSession = require("express-session");
+const passport = require("passport");
 
 const dotenv = require("dotenv");
 const { error } = require("./middleware/error");
 const userRouter = require("./routes/userRouter");
 const transactionRouter = require("./routes/transactionRouter");
+const keys = require("./config/keys");
 require("./config/passport.setup");
 
 const app = express();
 dotenv.config();
+
+app.use(expressSession({
+  secret: keys.session.cookieKey,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 mongoose
   .connect(process.env.DATABASE_LOCAL, {
