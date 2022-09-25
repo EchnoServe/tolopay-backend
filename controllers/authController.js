@@ -71,10 +71,6 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// exports.loginWithGoogle = () => {
-//   return ;
-// }
-
 exports.logout = async (req, res, next) => {
 
   res.send("logging out");

@@ -30,9 +30,9 @@ router.get("/google", passport.authenticate("google", {
 
 // call back route for google redirect
 router.get("/google/redirect", passport.authenticate('google'),
-(req, res) => {
+  (req, res, next) => {
     
-}
+  }
 )
 
 

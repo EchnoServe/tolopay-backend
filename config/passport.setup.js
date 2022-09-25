@@ -3,7 +3,6 @@ const User = require("../models/user");
 const UserSocial = require("../models/userLoggedWithSocial");
 const GoogleStrategy = require("passport-google-oauth20");
 const keys = require("./keys");
-const userSocial = require("../models/userLoggedWithSocial");
 
 passport.use(
     new GoogleStrategy(
@@ -18,11 +17,15 @@ passport.use(
 
             User.findOne({email: email}).then(user => {
                 if (user) {
-
+                    done( new Error("This email require password to login") );
                 } else {
-                    UserSocial.findOne({email: email}).then(userSocial => {
-                        if (userSocial) {
-                            console.log('already a user');
+                    UserSocial.findOne({email: email}, (err, found) => {
+                        if (err) {
+                            done(err);
+                        }
+                        if (found) {
+                            console.log(`already a user: ${found}`);
+                            
                         } else {
                             new UserSocial({
                                 name: profile.displayName,
@@ -30,9 +33,10 @@ passport.use(
                                 profilePic: profile.photos[0].value,
                             }).save().then(user => {
                                 console.log(`new user: ${user}`);
+                               
                             })
                         }
-                    })
+                    });
                 }
             })
 
