@@ -22,7 +22,9 @@ passport.use(
             // Google Strategy Option
             callbackURL: "/api/v1/users/google/redirect",
             clientID: keys.google.clientID,
-            clientSecret: keys.google.clientSecret
+            clientSecret: keys.google.clientSecret,
+            proxy: true,
+        
         }, (accessToken, refreshToken, profile, done) => {
             // passport callback
             const email = profile.emails[0].value;
