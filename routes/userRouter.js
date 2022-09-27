@@ -24,9 +24,14 @@ router.post(
 
 router.get("logout", authController.logout);
 
-router.get("/google", passport.authenticate("google", {
-    scope: ['profile', 'email']
-  }));
+router.get("/google",
+  (req, res, next) => {
+    req.session.redirectPath = req.query.redirectUrl;
+    next();
+  },  
+  passport.authenticate("google", {
+      scope: ['profile', 'email']
+    }));
 
 // call back route for google redirect
 router.get("/google/redirect", passport.authenticate('google'),
