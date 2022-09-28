@@ -32,7 +32,7 @@ exports.signup = async (req, res, next) => {
     status: "OK",
     data: {
       token,
-      user: user._id,
+      user,
     },
   });
 };
@@ -54,16 +54,17 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password");
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      res.status()
+      res.status();
       return next(new Error("incorrect email or password"));
     }
+    user.password = undefined;
 
     const token = signToken(user._id);
     res.status(200).json({
       status: "OK",
       data: {
         token,
-        user: user._id,
+        user,
       },
     });
   } catch (ex) {
@@ -76,7 +77,5 @@ exports.login = async (req, res, next) => {
 // }
 
 exports.logout = async (req, res, next) => {
-
   res.send("logging out");
-
-}
+};
