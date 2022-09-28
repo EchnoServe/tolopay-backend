@@ -20,7 +20,7 @@ const transactionSchema = new mongoose.Schema({
   },
   transferAmount: Number,
   previousAmount: Number,
-  remainingAmount: Number,
+  currentAmount: Number,
   type: String,
 });
 

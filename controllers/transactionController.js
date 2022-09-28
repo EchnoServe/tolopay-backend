@@ -53,7 +53,8 @@ exports.transfer = async (req, res, next) => {
     receiver_user: receiver_user._id,
     transferAmount: amount,
     previousAmount: previousAmount,
-    remainingAmount: remainingAmount,
+     
+    currentAmount: remainingAmount,
     type: "credit",
   });
 
@@ -70,6 +71,7 @@ exports.transfer = async (req, res, next) => {
     transferAmount: amount,
     previousAmount: receiver_user_previousAmount,
     currentAmount: currentAmount,
+    remark:remark,
     type: "debit",
   });
 
