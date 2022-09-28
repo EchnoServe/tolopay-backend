@@ -33,13 +33,21 @@ exports.transfer = async (req, res, next) => {
 
   //TODO:: wrong password  attempts
 
+  let budgeted = false;
+
   for (const item of user.budget) {
     if (item.remark === remark) {
-      item.amount = item.amount > amount ? item.amount - amount : 0;
+      budgeted = true;
+      item.amount =
+        parseFloat(item.amount) > parseFloat(amount)
+          ? item.amount - amount
+          : 12;
     }
   }
-  user.budget.push({ remark, amount, budgeted: false });
 
+  if (!budgeted) {
+    user.budget.push({ remark, amount, budgeted });
+  }
   user.save({ validateBeforeSave: false });
 
   //validate the password is correct
@@ -56,6 +64,7 @@ exports.transfer = async (req, res, next) => {
 
   const debitTransaction = await DebitTransaction.create({
     user_id: user.id,
+    budgeted: budgeted,
     remark: remark,
     receiver_user: receiver_user._id,
     transferAmount: amount,
