@@ -73,21 +73,20 @@ exports.login = async (req, res, next) => {
 };
 
 exports.loginWithGoogle = async (req, res, next) => {
-
-
+  
+    res.redirect("http://localhost:3000/login/success", );
+}
+exports.loginSocial = async (req, res, next) => {
   const user = req.user;
 
-  
-  
   const token = signToken(user._id);
-    // res.status(200).json({
-    //   status: "OK",
-    //   data: {
-    //     token,
-    //     user: user._id,
-    //   },
-    // });
-    res.redirect("http://localhost:3000/dashboard", );
+    res.status(200).json({
+      status: "OK",
+      data: {
+        token,
+        user: user._id,
+      },
+    });
 }
 
 exports.logout = async (req, res, next) => {
