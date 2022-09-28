@@ -2,7 +2,7 @@ const User = require("./../models/user");
 
 /**
  *  @desc  user profile
- *  @route PUT  /api/v1/users/me
+ *  @route GET  /api/v1/users/me
  *  @access Private
  */
 
@@ -48,7 +48,7 @@ exports.addBudget = async (req, res, next) => {
 
 /**
  *  @desc  upload a user profile image
- *  @route PUT  /api/v1/users/profileimage
+ *  @route POST  /api/v1/users/profileimage
  *  @access Private
  */
 
