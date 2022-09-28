@@ -3,6 +3,7 @@ const { protect } = require("../middleware/protect");
 const authController = require("./../controllers/authController");
 const userController = require("./../controllers/userController");
 const upload = require("./../middleware/muter");
+const passport = require("passport");
 
 const router = express.Router();
 
@@ -23,7 +24,16 @@ router.post(
 
 router.get("logout", authController.logout);
 
-router.get("/google", authController.loginWithGoogle);
+router.get("/google", passport.authenticate("google", {
+    scope: ['profile', 'email']
+  }));
+
+// call back route for google redirect
+router.get("/google/redirect", passport.authenticate('google'),
+(req, res) => {
+    
+}
+)
 
 
 module.exports = router;
