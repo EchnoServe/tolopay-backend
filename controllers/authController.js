@@ -72,10 +72,6 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.loginWithGoogle = async (req, res, next) => {
-  
-    res.redirect("http://localhost:3000/login/success", );
-}
 exports.loginSocial = async (req, res, next) => {
   const user = req.user;
 
