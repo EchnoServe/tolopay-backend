@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY, {
@@ -53,6 +54,7 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password");
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
+      res.status()
       return next(new Error("incorrect email or password"));
     }
 
@@ -68,3 +70,13 @@ exports.login = async (req, res, next) => {
     next(ex);
   }
 };
+
+// exports.loginWithGoogle = () => {
+//   return ;
+// }
+
+exports.logout = async (req, res, next) => {
+
+  res.send("logging out");
+
+}

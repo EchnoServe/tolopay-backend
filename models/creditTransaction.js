@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
-const transactionSchema = new mongoose.Schema({
+const creditTransactionSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    require: true,
-  },
-  remark: {
-    type: String,
   },
   createdAt: {
     type: Date,
     default: new Date(),
   },
-  receiver_user: {
+  remark: {
+    type: String,
+    require: true,
+  },
+  send_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     require: true,
@@ -24,17 +24,17 @@ const transactionSchema = new mongoose.Schema({
   type: String,
 });
 
-const creditTransactionModel = mongoose.model(
-  "creditTransaction",
-  transactionSchema
-);
-
-transactionSchema.pre(/^find/, function (next) {
+creditTransactionSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "receiver_user",
+    path: "send_user",
     select: "name",
   });
   next();
 });
+
+const creditTransactionModel = mongoose.model(
+  "creditTransaction",
+  creditTransactionSchema
+);
 
 module.exports = creditTransactionModel;

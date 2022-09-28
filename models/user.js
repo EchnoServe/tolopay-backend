@@ -12,10 +12,23 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 1000,
     },
+    username: {
+      type: Number,
+      unique: true,
+      lowercase: true,
+    },
+    profileimage: String,
     active: {
       type: Boolean,
       default: true,
     },
+    budget: [
+      {
+        remark: { type: String, trim: true },
+        amount: String,
+        budgeted: { type: Boolean, default: true },
+      },
+    ],
     email: {
       type: String,
       required: [true, "please provide your email"],
