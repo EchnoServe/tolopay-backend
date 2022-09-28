@@ -14,6 +14,7 @@ const debitTransactionSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  budgeted: Boolean,
   receiver_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
