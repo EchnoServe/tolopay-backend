@@ -24,7 +24,7 @@ router.post(
   userController.profileImage
 );
 
-router.get("logout", authController.logout);
+router.get("/logout", authController.logout);
 
 router.get(
   "/google",
@@ -38,6 +38,33 @@ router.get(
   "/google/redirect",
   passport.authenticate("google"),
   (req, res) => {}
+);
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+// call back route for google redirect
+router.get(
+  "/google/redirect",
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:3000/login/success",
+  })
+);
+
+router.get(
+  "/loginsocial",
+  (req, res, next) => {
+    if (!req.user) {
+      next(new Error("Login first to access the resource you want"));
+    } else {
+      next();
+    }
+  },
+  authController.loginSocial
 );
 
 module.exports = router;
