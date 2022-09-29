@@ -20,19 +20,11 @@ const debitTransactionSchema = new mongoose.Schema({
     ref: "user",
     require: true,
   },
-  transferAmount: {
-    type: Number,
-    require: true,
-  },
-  previousAmount: {
-    type: Number,
-    require: true,
-  },
-  currentAmount: {
-    type: Number,
-    require: true,
-  },
-  type: String,
+  remark:String,
+  transferAmount: Number,
+  previousAmount: Number,
+  currentAmount: Number,
+  type:{type: String,default:"debit"}
 });
 
 debitTransactionSchema.pre(/^find/, function (next) {
@@ -42,10 +34,10 @@ debitTransactionSchema.pre(/^find/, function (next) {
   });
   next();
 });
-
 const debitTransactionModel = mongoose.model(
   "debitTransaction",
   debitTransactionSchema
 );
+
 
 module.exports = debitTransactionModel;

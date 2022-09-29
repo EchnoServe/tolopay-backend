@@ -22,7 +22,11 @@
   "resolved" "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.19.3.tgz"
   "version" "7.19.3"
 
+<<<<<<< HEAD
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.11.6", "@babel/core@^7.12.3", "@babel/core@^7.8.0":
+=======
+"@babel/core@^7.11.6", "@babel/core@^7.12.3":
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   "integrity" "sha512-WneDJxdsjEvyKtXKsaBGbDeiyOjR5vYq4HcShxnIbG0qixpoHjI3MqeZM9NDvsojNCEBItQE4juOo/bU6e72gQ=="
   "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.19.3.tgz"
   "version" "7.19.3"
@@ -339,10 +343,17 @@
     "jest-util" "^29.1.0"
     "slash" "^3.0.0"
 
+<<<<<<< HEAD
 "@jest/core@^29.1.1":
   "integrity" "sha512-ppym+PLiuSmvU9ufXVb/8OtHUPcjW+bBlb8CLh6oMATgJtCE3fjDYrzJi5u1uX8q9jbmtQ7VADKJKIlp68zi3A=="
   "resolved" "https://registry.npmjs.org/@jest/core/-/core-29.1.1.tgz"
   "version" "29.1.1"
+=======
+"@jest/core@^29.1.0":
+  "integrity" "sha512-ePgDlmpMiMS26Xe7lLwOZ2Yfs49ckR530//yZn3hT8LIH0N/IeJvwomPQKoxnJxhVPNncxBY9gPSz5jjQw85wA=="
+  "resolved" "https://registry.npmjs.org/@jest/core/-/core-29.1.0.tgz"
+  "version" "29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   dependencies:
     "@jest/console" "^29.1.0"
     "@jest/reporters" "^29.1.0"
@@ -356,14 +367,24 @@
     "exit" "^0.1.2"
     "graceful-fs" "^4.2.9"
     "jest-changed-files" "^29.0.0"
+<<<<<<< HEAD
     "jest-config" "^29.1.1"
+=======
+    "jest-config" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-haste-map" "^29.1.0"
     "jest-message-util" "^29.1.0"
     "jest-regex-util" "^29.0.0"
     "jest-resolve" "^29.1.0"
+<<<<<<< HEAD
     "jest-resolve-dependencies" "^29.1.1"
     "jest-runner" "^29.1.1"
     "jest-runtime" "^29.1.1"
+=======
+    "jest-resolve-dependencies" "^29.1.0"
+    "jest-runner" "^29.1.0"
+    "jest-runtime" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-snapshot" "^29.1.0"
     "jest-util" "^29.1.0"
     "jest-validate" "^29.1.0"
@@ -373,6 +394,7 @@
     "slash" "^3.0.0"
     "strip-ansi" "^6.0.0"
 
+<<<<<<< HEAD
 "@jest/environment@^29.1.1":
   "integrity" "sha512-69WULhTD38UcjvLGRAnnwC5hDt35ZC91ZwnvWipNOAOSaQNT32uKYL/TVCT3tncB9L1D++LOmBbYhTYP4TLuuQ=="
   "resolved" "https://registry.npmjs.org/@jest/environment/-/environment-29.1.1.tgz"
@@ -382,6 +404,17 @@
     "@jest/types" "^29.1.0"
     "@types/node" "*"
     "jest-mock" "^29.1.1"
+=======
+"@jest/environment@^29.1.0":
+  "integrity" "sha512-RmmFwXbZiAzJw1qa3dBvAI1LYz52MpdBRho8xSY1J1Cxcbzd9x42MpXx+NFHl9cymuQnvzp2jlFHV+JHy3k8Cg=="
+  "resolved" "https://registry.npmjs.org/@jest/environment/-/environment-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/fake-timers" "^29.1.0"
+    "@jest/types" "^29.1.0"
+    "@types/node" "*"
+    "jest-mock" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
 
 "@jest/expect-utils@^29.1.0":
   "integrity" "sha512-YcD5CF2beqfoB07WqejPzWq1/l+zT3SgGwcqqIaPPG1DHFn/ea8MWWXeqV3KKMhTaOM1rZjlYplj1GQxR0XxKA=="
@@ -398,15 +431,23 @@
     "expect" "^29.1.0"
     "jest-snapshot" "^29.1.0"
 
+<<<<<<< HEAD
 "@jest/fake-timers@^29.1.1":
   "integrity" "sha512-5wTGObRfL/OjzEz0v2ShXlzeJFJw8mO6ByMBwmPLd6+vkdPcmIpCvASG/PR/g8DpchSIEeDXCxQADojHxuhX8g=="
   "resolved" "https://registry.npmjs.org/@jest/fake-timers/-/fake-timers-29.1.1.tgz"
   "version" "29.1.1"
+=======
+"@jest/fake-timers@^29.1.0":
+  "integrity" "sha512-6B6NFieIn68nMHqehnJYvHc7qAMun7/2dpDG6MmDNdXjgx4IWPIir+xwhMTO2qZYyFKEawiOQCHGab/koxazug=="
+  "resolved" "https://registry.npmjs.org/@jest/fake-timers/-/fake-timers-29.1.0.tgz"
+  "version" "29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   dependencies:
     "@jest/types" "^29.1.0"
     "@sinonjs/fake-timers" "^9.1.2"
     "@types/node" "*"
     "jest-message-util" "^29.1.0"
+<<<<<<< HEAD
     "jest-mock" "^29.1.1"
     "jest-util" "^29.1.0"
 
@@ -419,6 +460,20 @@
     "@jest/expect" "^29.1.0"
     "@jest/types" "^29.1.0"
     "jest-mock" "^29.1.1"
+=======
+    "jest-mock" "^29.1.0"
+    "jest-util" "^29.1.0"
+
+"@jest/globals@^29.1.0":
+  "integrity" "sha512-GqGT5Uw3R5TWjSYroQk20nywXo0tPttFI+SPoCgR34q08JU4UPFZAiM3Mbn/MZIRMYv18H7QwpICDRnB+KBOhg=="
+  "resolved" "https://registry.npmjs.org/@jest/globals/-/globals-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/environment" "^29.1.0"
+    "@jest/expect" "^29.1.0"
+    "@jest/types" "^29.1.0"
+    "jest-mock" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
 
 "@jest/reporters@^29.1.0":
   "integrity" "sha512-szSjHjVuBQ7aZUdBzTicCoQAAQsQFLk+/PtMfO0RQxL5mQ1iw+PSKOpyvMZcA5T6bH9pIapue5U9UCrxfOtL3w=="
@@ -870,7 +925,11 @@
   dependencies:
     "fill-range" "^7.0.1"
 
+<<<<<<< HEAD
 "browserslist@^4.21.3", "browserslist@>= 4.21.0":
+=======
+"browserslist@^4.21.3":
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   "integrity" "sha512-CBHJJdDmgjl3daYjN5Cp5kbTf1mUhZoS+beLklHIvkOWscs83YAhLlF3Wsh/lciQYAcbBJgTOD44VtG31ZM4Hw=="
   "resolved" "https://registry.npmjs.org/browserslist/-/browserslist-4.21.4.tgz"
   "version" "4.21.4"
@@ -1225,9 +1284,15 @@
   "version" "1.1.1"
 
 "electron-to-chromium@^1.4.251":
+<<<<<<< HEAD
   "integrity" "sha512-saJTYECxUSv7eSpnXw0XIEvUkP9x4s/x2mm3TVX7k4rIFS6f5TjBih1B5h437WzIhHQjid+d8ouQzPQskMervQ=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.266.tgz"
   "version" "1.4.266"
+=======
+  "integrity" "sha512-38KaYBNs0oCzWCpr6j7fY/W9vF0vSp4tKFIshQTgdZMhUpkxgotkQgjJP6iGMdmlsgMs3i0/Hkko4UXLTrkYVQ=="
+  "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.265.tgz"
+  "version" "1.4.265"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
 
 "emittery@^0.10.2":
   "integrity" "sha512-aITqOwnLanpHLNXZJENbOgjUBeHocD+xsSJmNrjovKBW5HbSpW3d1pEls7GFQPUWXiwG9+0P4GtHfEqC/4M0Iw=="
@@ -1336,7 +1401,11 @@
     "safe-buffer" "5.2.1"
     "uid-safe" "~2.1.5"
 
+<<<<<<< HEAD
 "express@^4.16.2", "express@^4.18.1":
+=======
+"express@^4.18.1":
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   "integrity" "sha512-zZBcOX9TfehHQhtupq57OF8lFZ3UZi08Y97dwFCkD8p9d/d2Y3M+ykKcwaMDEL+4qyUolgBDX6AblpR3fL212Q=="
   "resolved" "https://registry.npmjs.org/express/-/express-4.18.1.tgz"
   "version" "4.18.1"
@@ -1713,12 +1782,21 @@
     "execa" "^5.0.0"
     "p-limit" "^3.1.0"
 
+<<<<<<< HEAD
 "jest-circus@^29.1.1":
   "integrity" "sha512-Ii+3JIeLF3z8j2E7fPSjPjXJLBdbAcZyfEiALRQ1Fk+FWTIfuEfZrZcjSaBdz/k/waoq+bPf9x/vBCXIAyLLEQ=="
   "resolved" "https://registry.npmjs.org/jest-circus/-/jest-circus-29.1.1.tgz"
   "version" "29.1.1"
   dependencies:
     "@jest/environment" "^29.1.1"
+=======
+"jest-circus@^29.1.0":
+  "integrity" "sha512-M48NDbxVodhmVqTmxQJLAMs+r1OZYAM19xllPy8PyeYG4IMVSdx0uTs/K90rmUZolpXo7F7FakI61Q2X9ptD+g=="
+  "resolved" "https://registry.npmjs.org/jest-circus/-/jest-circus-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/environment" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "@jest/expect" "^29.1.0"
     "@jest/test-result" "^29.1.0"
     "@jest/types" "^29.1.0"
@@ -1730,7 +1808,11 @@
     "jest-each" "^29.1.0"
     "jest-matcher-utils" "^29.1.0"
     "jest-message-util" "^29.1.0"
+<<<<<<< HEAD
     "jest-runtime" "^29.1.1"
+=======
+    "jest-runtime" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-snapshot" "^29.1.0"
     "jest-util" "^29.1.0"
     "p-limit" "^3.1.0"
@@ -1738,28 +1820,48 @@
     "slash" "^3.0.0"
     "stack-utils" "^2.0.3"
 
+<<<<<<< HEAD
 "jest-cli@^29.1.1":
   "integrity" "sha512-nz/JNtqDFf49R2KgeZ9+6Zl1uxSuRsg/tICC+DHMh+bQ0co6QqBPWKg3FtW4534bs8/J2YqFC2Lct9DZR24z0Q=="
   "resolved" "https://registry.npmjs.org/jest-cli/-/jest-cli-29.1.1.tgz"
   "version" "29.1.1"
   dependencies:
     "@jest/core" "^29.1.1"
+=======
+"jest-cli@^29.1.0":
+  "integrity" "sha512-5NBiEhtbjSq+W9bZ8lC1p3osLSNUsRaYB6pzW166UFADcpFYRulM9xeUklbNeWPuUzGrGUsluRIaNZc1A5/UUg=="
+  "resolved" "https://registry.npmjs.org/jest-cli/-/jest-cli-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/core" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "@jest/test-result" "^29.1.0"
     "@jest/types" "^29.1.0"
     "chalk" "^4.0.0"
     "exit" "^0.1.2"
     "graceful-fs" "^4.2.9"
     "import-local" "^3.0.2"
+<<<<<<< HEAD
     "jest-config" "^29.1.1"
+=======
+    "jest-config" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-util" "^29.1.0"
     "jest-validate" "^29.1.0"
     "prompts" "^2.0.1"
     "yargs" "^17.3.1"
 
+<<<<<<< HEAD
 "jest-config@^29.1.1":
   "integrity" "sha512-o2iZrQMOiF54zOw1kOcJGmfKzAW+V2ajZVWxbt+Ex+g0fVaTkk215BD/GFhrviuic+Xk7DpzUmdTT9c1QfsPqg=="
   "resolved" "https://registry.npmjs.org/jest-config/-/jest-config-29.1.1.tgz"
   "version" "29.1.1"
+=======
+"jest-config@^29.1.0":
+  "integrity" "sha512-WXIIrSbP+I6MtkoDAemVR+Y7lzpZBYZa8ZfUR3IW74w1b/0ag6WGCuu0UuTZUVOm6DTSO2/pMKaO5TqvVGnd9w=="
+  "resolved" "https://registry.npmjs.org/jest-config/-/jest-config-29.1.0.tgz"
+  "version" "29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   dependencies:
     "@babel/core" "^7.11.6"
     "@jest/test-sequencer" "^29.1.0"
@@ -1770,12 +1872,21 @@
     "deepmerge" "^4.2.2"
     "glob" "^7.1.3"
     "graceful-fs" "^4.2.9"
+<<<<<<< HEAD
     "jest-circus" "^29.1.1"
     "jest-environment-node" "^29.1.1"
     "jest-get-type" "^29.0.0"
     "jest-regex-util" "^29.0.0"
     "jest-resolve" "^29.1.0"
     "jest-runner" "^29.1.1"
+=======
+    "jest-circus" "^29.1.0"
+    "jest-environment-node" "^29.1.0"
+    "jest-get-type" "^29.0.0"
+    "jest-regex-util" "^29.0.0"
+    "jest-resolve" "^29.1.0"
+    "jest-runner" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-util" "^29.1.0"
     "jest-validate" "^29.1.0"
     "micromatch" "^4.0.4"
@@ -1812,6 +1923,7 @@
     "jest-util" "^29.1.0"
     "pretty-format" "^29.1.0"
 
+<<<<<<< HEAD
 "jest-environment-node@^29.1.1":
   "integrity" "sha512-0nwTca4L2N8iM33A+JMfBdygR6B3N/bcPoLe1hEd9o87KLxDZwKGvpTGSfXpjtyqNQXiaL/3G+YOcSoeq/syPw=="
   "resolved" "https://registry.npmjs.org/jest-environment-node/-/jest-environment-node-29.1.1.tgz"
@@ -1822,6 +1934,18 @@
     "@jest/types" "^29.1.0"
     "@types/node" "*"
     "jest-mock" "^29.1.1"
+=======
+"jest-environment-node@^29.1.0":
+  "integrity" "sha512-C02EoU9oRYCpJvz9CrIcywBv6C27AcOn0+v2ps1aXsWYOh8DU9dNF20g6acz3z4KVIUAd17ajOZq0qNd0S94xw=="
+  "resolved" "https://registry.npmjs.org/jest-environment-node/-/jest-environment-node-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/environment" "^29.1.0"
+    "@jest/fake-timers" "^29.1.0"
+    "@jest/types" "^29.1.0"
+    "@types/node" "*"
+    "jest-mock" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-util" "^29.1.0"
 
 "jest-get-type@^29.0.0":
@@ -1881,10 +2005,17 @@
     "slash" "^3.0.0"
     "stack-utils" "^2.0.3"
 
+<<<<<<< HEAD
 "jest-mock@^29.1.1":
   "integrity" "sha512-vDe56JmImqt3j8pHcEIkahQbSCnBS49wda0spIl0bkrIM7VDZXjKaes6W28vKZye0atNAcFaj3dxXh0XWjBW4Q=="
   "resolved" "https://registry.npmjs.org/jest-mock/-/jest-mock-29.1.1.tgz"
   "version" "29.1.1"
+=======
+"jest-mock@^29.1.0":
+  "integrity" "sha512-2yvQCM0sOnHzXpDKwoCoWtzKaz7ef33XML7iuVguKf1YzVMVJa7ctrJXCtY/2t3iVRerKUSNlhiiSrWclkZfSw=="
+  "resolved" "https://registry.npmjs.org/jest-mock/-/jest-mock-29.1.0.tgz"
+  "version" "29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   dependencies:
     "@jest/types" "^29.1.0"
     "@types/node" "*"
@@ -1900,15 +2031,26 @@
   "resolved" "https://registry.npmjs.org/jest-regex-util/-/jest-regex-util-29.0.0.tgz"
   "version" "29.0.0"
 
+<<<<<<< HEAD
 "jest-resolve-dependencies@^29.1.1":
   "integrity" "sha512-AMRTJyiK8caRXq3pa9i4oXX6yH+am5v0HwCUq1yk9lxI3ARihyT2OfEySJJo3ER7xpxf3b6isfp1sO6PQY3N0Q=="
   "resolved" "https://registry.npmjs.org/jest-resolve-dependencies/-/jest-resolve-dependencies-29.1.1.tgz"
   "version" "29.1.1"
+=======
+"jest-resolve-dependencies@^29.1.0":
+  "integrity" "sha512-5DzPIPAFLlcpYdCltLY/bnncoBNBmvsx/Arvc5n1H2+rL3k7pMaulaUwecZiivsHqX7YPpnBG+BHmr6f6NYk4g=="
+  "resolved" "https://registry.npmjs.org/jest-resolve-dependencies/-/jest-resolve-dependencies-29.1.0.tgz"
+  "version" "29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   dependencies:
     "jest-regex-util" "^29.0.0"
     "jest-snapshot" "^29.1.0"
 
+<<<<<<< HEAD
 "jest-resolve@*", "jest-resolve@^29.1.0":
+=======
+"jest-resolve@^29.1.0":
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
   "integrity" "sha512-0IETuMI58nbAWwCrtX1QQmenstlWOEdwNS5FXxpEMAs6S5tttFiEoXUwGTAiI152nqoWRUckAgt21FP4wqeZWA=="
   "resolved" "https://registry.npmjs.org/jest-resolve/-/jest-resolve-29.1.0.tgz"
   "version" "29.1.0"
@@ -1923,6 +2065,7 @@
     "resolve.exports" "^1.1.0"
     "slash" "^3.0.0"
 
+<<<<<<< HEAD
 "jest-runner@^29.1.1":
   "integrity" "sha512-HqazsMPXB62Zi2oJEl+Ta9aUWAaR4WdT7ow25pcS99PkOsWQoYH+yyaKbAHBUf8NOqPbZ8T4Q8gt8ZBFEJJdVQ=="
   "resolved" "https://registry.npmjs.org/jest-runner/-/jest-runner-29.1.1.tgz"
@@ -1930,6 +2073,15 @@
   dependencies:
     "@jest/console" "^29.1.0"
     "@jest/environment" "^29.1.1"
+=======
+"jest-runner@^29.1.0":
+  "integrity" "sha512-y9zlwx48w7FMXO7w8lTREnkdKII6q6pLahMOmQeKkPh376ZTw/XVDQKnDYRQbI2gZOIsNWFVIjAyyNVfNWGY1Q=="
+  "resolved" "https://registry.npmjs.org/jest-runner/-/jest-runner-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/console" "^29.1.0"
+    "@jest/environment" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "@jest/test-result" "^29.1.0"
     "@jest/transform" "^29.1.0"
     "@jest/types" "^29.1.0"
@@ -1938,18 +2090,27 @@
     "emittery" "^0.10.2"
     "graceful-fs" "^4.2.9"
     "jest-docblock" "^29.0.0"
+<<<<<<< HEAD
     "jest-environment-node" "^29.1.1"
+=======
+    "jest-environment-node" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-haste-map" "^29.1.0"
     "jest-leak-detector" "^29.1.0"
     "jest-message-util" "^29.1.0"
     "jest-resolve" "^29.1.0"
+<<<<<<< HEAD
     "jest-runtime" "^29.1.1"
+=======
+    "jest-runtime" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-util" "^29.1.0"
     "jest-watcher" "^29.1.0"
     "jest-worker" "^29.1.0"
     "p-limit" "^3.1.0"
     "source-map-support" "0.5.13"
 
+<<<<<<< HEAD
 "jest-runtime@^29.1.1":
   "integrity" "sha512-DA2nW5GUAEFUOFztVqX6BOHbb1tUO1iDzlx+bOVdw870UIkv09u3P5nTfK3N+xtqy/fGlLsg7UCzhpEJnwKilg=="
   "resolved" "https://registry.npmjs.org/jest-runtime/-/jest-runtime-29.1.1.tgz"
@@ -1958,6 +2119,16 @@
     "@jest/environment" "^29.1.1"
     "@jest/fake-timers" "^29.1.1"
     "@jest/globals" "^29.1.1"
+=======
+"jest-runtime@^29.1.0":
+  "integrity" "sha512-trdIYxjmspQhVMUyFDFUMMhsOC+ZQ4+i5pj6pmPrRvuN2SyNrQibVikMwOrYCWWN5jAnzubj0N/OJo8vLylfaw=="
+  "resolved" "https://registry.npmjs.org/jest-runtime/-/jest-runtime-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/environment" "^29.1.0"
+    "@jest/fake-timers" "^29.1.0"
+    "@jest/globals" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "@jest/source-map" "^29.0.0"
     "@jest/test-result" "^29.1.0"
     "@jest/transform" "^29.1.0"
@@ -1970,7 +2141,11 @@
     "graceful-fs" "^4.2.9"
     "jest-haste-map" "^29.1.0"
     "jest-message-util" "^29.1.0"
+<<<<<<< HEAD
     "jest-mock" "^29.1.1"
+=======
+    "jest-mock" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
     "jest-regex-util" "^29.0.0"
     "jest-resolve" "^29.1.0"
     "jest-snapshot" "^29.1.0"
@@ -2056,6 +2231,7 @@
     "supports-color" "^8.0.0"
 
 "jest@^29.0.3":
+<<<<<<< HEAD
   "integrity" "sha512-Doe41PZ8MvGLtOZIW2RIVu94wa7jm/N775BBloVXk/G/vV6VYnDCOxBwrqekEgrd3Pn/bv8b5UdB2x0pAoQpwQ=="
   "resolved" "https://registry.npmjs.org/jest/-/jest-29.1.1.tgz"
   "version" "29.1.1"
@@ -2064,6 +2240,16 @@
     "@jest/types" "^29.1.0"
     "import-local" "^3.0.2"
     "jest-cli" "^29.1.1"
+=======
+  "integrity" "sha512-MHB4fEv7kTKq+Ad2VkwGlm6viBxx9SprGlmmVxHwwJ6AXMQMXK1afL9ShCY3jNpwf9kN637Iz0YcncWGU9mj8w=="
+  "resolved" "https://registry.npmjs.org/jest/-/jest-29.1.0.tgz"
+  "version" "29.1.0"
+  dependencies:
+    "@jest/core" "^29.1.0"
+    "@jest/types" "^29.1.0"
+    "import-local" "^3.0.2"
+    "jest-cli" "^29.1.0"
+>>>>>>> 29d2edee5e6c8ca48ffa291590218a45c8af50a9
 
 "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="

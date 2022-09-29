@@ -29,7 +29,7 @@ app.use(passport.session());
 
 
 mongoose
-  .connect(process.env.DATABASE_LOCAL, {
+  .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -52,8 +52,6 @@ app.use("/api/v1/transaction", transactionRouter);
 
 app.use(error);
 
-const PORT = process.env.PORT || 8000;
-
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 8000,() =>{
   console.log(`> Server running on port 8000`);
 });
