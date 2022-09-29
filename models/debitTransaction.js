@@ -24,7 +24,7 @@ const debitTransactionSchema = new mongoose.Schema({
   transferAmount: Number,
   previousAmount: Number,
   currentAmount: Number,
-  type: String,
+  type:{type: String,default:"debit"}
 });
 
 debitTransactionSchema.pre(/^find/, function (next) {

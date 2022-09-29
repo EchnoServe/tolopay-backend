@@ -41,7 +41,7 @@ exports.transfer = async (req, res, next) => {
       item.amount =
         parseFloat(item.amount) > parseFloat(amount)
           ? item.amount - amount
-          : 12;
+          : 0;
     }
   }
 
@@ -58,7 +58,7 @@ exports.transfer = async (req, res, next) => {
   //   DebitTransaction for user
   const previousAmount = user.balance;
   const remainingAmount = user.balance - amount;
-  await User.findByIdAndUpdate(user.id, {
+  const newuser = await User.findByIdAndUpdate(user.id, {
     balance: remainingAmount,
   }); //
 
@@ -71,7 +71,7 @@ exports.transfer = async (req, res, next) => {
     previousAmount: previousAmount,
      
     currentAmount: remainingAmount,
-    type: "credit",
+    
   });
 
   //creditTransaction
@@ -90,12 +90,13 @@ exports.transfer = async (req, res, next) => {
     previousAmount: receiver_user_previousAmount,
     currentAmount: currentAmount,
     remark:remark,
-    type: "debit",
+    
   });
 
   res.status(201).json({
     status: "OK",
-    debitTransaction,
+    newuser
+    ,
   });
 
   next();

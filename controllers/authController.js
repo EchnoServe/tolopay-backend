@@ -16,7 +16,7 @@ const signToken = (id) => {
  */
 
 exports.signup = async (req, res, next) => {
-  const { name, email, password, passwordConfirm, phoneNumber } = req.body;
+  const { name, email, password, passwordConfirm, phoneNumber,username } = req.body;
 
   const user = await User.create({
     name,
@@ -24,6 +24,7 @@ exports.signup = async (req, res, next) => {
     password,
     passwordConfirm,
     phoneNumber,
+    username
   });
 
   const token = signToken(user._id);

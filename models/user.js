@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema(
       default: 1000,
     },
     username: {
-      type: Number,
+      required: [true, "please provide user name !"],
+      
+      type: String,
       unique: true,
       lowercase: true,
     },
