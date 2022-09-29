@@ -10,10 +10,12 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
-
 router.get("/me", protect, userController.me);
 
 router.put("/addbudget", protect, userController.addBudget);
+router.get("/moneyout", protect, userController.moneyout);
+
+router.get("/moneyin", protect, userController.moneyin);
 
 router.post(
   "/profileImage",
@@ -24,16 +26,18 @@ router.post(
 
 router.get("logout", authController.logout);
 
-router.get("/google", passport.authenticate("google", {
-    scope: ['profile', 'email']
-  }));
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
 
 // call back route for google redirect
-router.get("/google/redirect", passport.authenticate('google'),
-(req, res) => {
-    
-}
-)
-
+router.get(
+  "/google/redirect",
+  passport.authenticate("google"),
+  (req, res) => {}
+);
 
 module.exports = router;
