@@ -27,25 +27,44 @@ exports.me = async (req, res, next) => {
  */
 
 exports.addBudget = async (req, res, next) => {
+  // {
+  //   "remark": "For Food",
+  //   "amount": "400"
+  // }
+
   if (!req.body) {
     return next(new Error("Please enter the fields in your form correctly"));
   }
   //TODO:check balances
 
-  const user = await User.findByIdAndUpdate(
-    req.user.id,
-    {
-      $push: { budget: req.body },
-    },
-    {
-      new: true,
-    }
-  );
+  let budgeted_before = false;
 
-  res.status(200).json({
+  for (const item of req.user.budget) {
+    if (item.remark === req.body.remark) {
+      budgeted_before = true;
+      item.amount = item.amount + req.body.amount;
+      req.user.save({ validateBeforeSave: false });
+    }
+  }
+
+  let newuser;
+
+  if (!budgeted_before) {
+    newuser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $push: { budget: req.body },
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
+  res.status(201).json({
     status: "OK",
     data: {
-      user,
+      user: newuser,
     },
   });
 };
