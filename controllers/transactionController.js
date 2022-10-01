@@ -12,9 +12,7 @@ const DebitTransaction = require("./../models/debitTransaction");
  *  @access Private
  */
 
-exports.transfer = async (req, res, next) => {
-  const user = req.user;
-  const { phoneNumber, amount, password, remark } = req.body;
+exports.transfer = async ({ phoneNumber, amount, password, remark, user }) => {
   if (!phoneNumber || !amount || !password || !remark) {
     return next(new Error("Please enter the fields in your form correctly"));
   }
@@ -39,9 +37,7 @@ exports.transfer = async (req, res, next) => {
     if (item.remark === remark) {
       budgeted = true;
       item.amount =
-        parseFloat(item.amount) > parseFloat(amount)
-          ? item.amount - amount
-          : 0;
+        parseFloat(item.amount) > parseFloat(amount) ? item.amount - amount : 0;
     }
   }
 
@@ -69,9 +65,7 @@ exports.transfer = async (req, res, next) => {
     receiver_user: receiver_user._id,
     transferAmount: amount,
     previousAmount: previousAmount,
-     
     currentAmount: remainingAmount,
-    
   });
 
   //creditTransaction
@@ -89,17 +83,13 @@ exports.transfer = async (req, res, next) => {
     transferAmount: amount,
     previousAmount: receiver_user_previousAmount,
     currentAmount: currentAmount,
-    remark:remark,
-    
+    remark: remark,
   });
 
-  res.status(201).json({
+  return {
     status: "OK",
-    newuser
-    ,
-  });
-
-  next();
+    newuser,
+  };
 };
 
 /**
