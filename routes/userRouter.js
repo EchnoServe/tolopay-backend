@@ -7,7 +7,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-router.post("/signup", authController.signup);
+router.post("/signup",  authController.signup);
 router.post("/login", authController.login);
 
 router.get("/me", protect, userController.me);
@@ -29,21 +29,7 @@ router.get("/logout", authController.logout);
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
-
-// call back route for google redirect
-router.get(
-  "/google/redirect",
-  passport.authenticate("google"),
-  (req, res) => {}
-);
-
-router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"], session: false
   })
 );
 

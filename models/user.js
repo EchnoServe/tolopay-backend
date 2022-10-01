@@ -8,15 +8,34 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "please tell us your name!"],
     },
+    email: {
+      type: String,
+      required: [true, "please provide your email"],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "please provide a valid email"],
+    },
     balance: {
       type: Number,
       default: 1000,
     },
     account_number: {
-      required: true,,
+      required: true,
       type: Number,
       unique: true,
       
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    age: {
+      type: Number,
+    },
+    phoneNumber: {
+      type: Number,
+      unique: true,
     },
     profileimage: String,
     active: {
@@ -30,42 +49,37 @@ const userSchema = new mongoose.Schema(
         budgeted: { type: Boolean, default: true },
       },
     ],
-    email: {
-      type: String,
-      required: [true, "please provide your email"],
-      unique: true,
-      lowercase: true,
-      validate: [validator.isEmail, "please provide a valid email"],
-    },
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    },
-    age: {
-      type: Number,
-    },
-    phoneNumber: {
-      type: Number,
-      unique: true,
-      required: [true, "please provide your phone number"],
-    },
-    password: {
-      type: String,
-      required: [true, "please provide your password"],
-      minlength: 8,
-      select: false,
-    },
-    passwordConfirm: {
-      type: String,
-      required: [true, "please  confirm your password"],
-      validate: {
-        validator: function (el) {
-          return el === this.password;
+    accounts: [
+      {
+        password: {
+          type: String,
+          // required: [true, "please provide your password"],
+          minlength: 8,
+          select: false,
         },
-        message: "password are not same!!!",
+        passwordConfirm: {
+          type: String,
+          // required: [true, "please  confirm your password"],
+          validate: {
+            validator: function (el) {
+              return el === this.password;
+            },
+            message: "password are not same!!!",
+          },
+        },
+        
       },
-    },
+      {
+        uid: {
+          type: String
+        },
+        email: {
+          type: String
+        }
+      }
+     
+
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -75,8 +89,8 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 12);
-    this.passwordConfirm = undefined;
+    this.accounts[0].password = await bcrypt.hash(this.password, 12);
+    this.accounts[0].passwordConfirm = undefined;
 
     next();
   }

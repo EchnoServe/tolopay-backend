@@ -1,6 +1,5 @@
 const passport = require("passport");
 const User = require("../models/user");
-const UserSocial = require("../models/userLoggedWithSocial");
 const GoogleStrategy = require("passport-google-oauth20");
 const keys = require("./keys");
 
@@ -9,7 +8,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    UserSocial.findById(id).then((user) => {
+    User.findById(id).then((user) => {
         done(null, user);
     })
     
@@ -31,34 +30,30 @@ passport.use(
 
             User.findOne({email: email}).then(user => {
                 if (user) {
-                    done( new Error("This email require password to login") );
+                    if(user.accounts[1].email){
+                        console.log(`already a user: ${user}`);
+                        done(null, user);
+                    } else {
+                        done( new Error("This email require password to login"));
+                    }      
                 } else {
-                    UserSocial.findOne({email: email}, (err, currentUser) => {
-                        if (err) {
-                            done(err);
-                        }
-                        if (currentUser) {
-                            console.log(`already a user: ${currentUser}`);
-                            done(null, currentUser);
-                            
-                        } else {
-                            new UserSocial({
-                                name: profile.displayName,
+                    
+                    new User({
+                        name: profile.displayName,
+                        email: email,
+                        profileimage: profile.photos[0].value,
+                        accounts: [
+                            {
+                                uid: profile.id,
                                 email: email,
-                                profilePic: profile.photos[0].value,
-                            }).save().then(newUser => {
-                                console.log(`new user: ${newUser}`);
-                                done(null, newUser );
-                               
-                            })
-                        }
+                            }
+                        ]
+                    }).save().then(newUser => {
+                        console.log(`new user: ${newUser}`);
+                        done(null, newUser );
                     });
                 }
-            })
-
-            
-
-            
+            })  
         }
     )
 )

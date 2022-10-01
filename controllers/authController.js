@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
+
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY, {
@@ -16,26 +16,38 @@ const signToken = (id) => {
  */
 
 exports.signup = async (req, res, next) => {
-  const { name, email, password, passwordConfirm, phoneNumber,username } = req.body;
+  const { name, email, password, passwordConfirm, phoneNumber
+    ,username
+   } = req.body;
 
-  const user = await User.create({
-    name,
-    email,
-    password,
-    passwordConfirm,
-    phoneNumber,
-    username
-  });
+  User.findOne({"accounts.email": email}, async (err, found)  => {
 
-  const token = signToken(user._id);
+    if (found) {
+      next(new Error("This email is already registered with google sign in"));
+    } else {
+      // User.findOneAndUpdate({lastAccount: })
+      const user = await User.create({
+        name: name,
+        email: email,
+        account_number: username,
+        "accounts.password": password,
+        "accounts.passwordConfirm": passwordConfirm,
+        phoneNumber,
+      });
+    
+      const token = signToken(user._id);
+    
+      res.status(201).json({
+        status: "OK",
+        data: {
+          token,
+          user,
+        },
+      });
+    }
+  })
 
-  res.status(201).json({
-    status: "OK",
-    data: {
-      token,
-      user,
-    },
-  });
+
 };
 
 /**
@@ -52,7 +64,7 @@ exports.login = async (req, res, next) => {
       return next(new Error("provide email and password"));
     }
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+accounts.password");
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       res.status();
@@ -81,7 +93,7 @@ exports.loginSocial = async (req, res, next) => {
       status: "OK",
       data: {
         token,
-        user: user._id,
+        user: user,
       },
     });
 }
