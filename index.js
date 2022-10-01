@@ -17,19 +17,20 @@ require("./config/passport.setup");
 const app = express();
 dotenv.config();
 
-app.use(expressSession({
-  secret: keys.session.cookieKey,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}));
+app.use(
+  expressSession({
+    secret: keys.session.cookieKey,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -40,9 +41,11 @@ mongoose
 app.use("/tolopayprofiles", express.static("tolopayprofiles"));
 
 app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:3000",
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -52,6 +55,6 @@ app.use("/api/v1/transaction", transactionRouter);
 
 app.use(error);
 
-app.listen(process.env.PORT || 8000,() =>{
+app.listen(process.env.PORT || 8000, () => {
   console.log(`> Server running on port 8000`);
 });

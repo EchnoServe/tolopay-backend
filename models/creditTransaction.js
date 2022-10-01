@@ -21,8 +21,7 @@ const creditTransactionSchema = new mongoose.Schema({
   transferAmount: Number,
   previousAmount: Number,
   currentAmount: Number,
-  type: {type:String,
-  default:"credit"},
+  type: { type: String, default: "credit" },
 });
 
 creditTransactionSchema.pre(/^find/, function (next) {
