@@ -12,12 +12,11 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 1000,
     },
-    username: {
-      required: [true, "please provide user name !"],
-
-      type: String,
+    account_number: {
+      required: true,,
+      type: Number,
       unique: true,
-      lowercase: true,
+      
     },
     profileimage: String,
     active: {
