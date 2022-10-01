@@ -5,15 +5,18 @@ const GoogleStrategy = require("passport-google-oauth20");
 const keys = require("./keys");
 
 passport.serializeUser((user, done) => {
-    console.log(`user in serial ${user}`);
     done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
-    console.log(id);
     
     UserSocial.findOne({_id: id}, (err, user) => {
-        console.log(`user in deserialize ${user}`);
+        if(err) {
+            done(err);
+        } else {
+            done(null, user);
+        }
+        
     });
     
 });
@@ -42,12 +45,11 @@ passport.use(
                         }
                         if (currentUser) {
                             done(null, currentUser);
-                            console.log('reached 1');
                         } else {
                             new UserSocial({
                                 name: profile.displayName,
                                 email: email,
-                                profilePic: profile.photos[0].value,
+                                profileimage: profile.photos[0].value,
                             }).save().then(newUser => {
                                 console.log("reached new");
                                 done(null, newUser );
