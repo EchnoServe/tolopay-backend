@@ -12,13 +12,16 @@ router.post("/transfer", protect, async (req, res, next) => {
   const { phoneNumber, amount, password, remark } = req.body;
 
   try {
-    const newuser = await transfer({
-      phoneNumber,
-      amount,
-      password,
-      remark,
-      user,
-    });
+    const newuser = await transfer(
+      {
+        phoneNumber,
+        amount,
+        password,
+        remark,
+        user,
+      },
+      false
+    );
     res.status(201).json(newuser);
   } catch (ex) {
     res.status(404).json({
