@@ -33,7 +33,7 @@ const job = schedule.scheduleJob("* * * * * *", async function () {
         true
       );
       await Notification.create({
-        message: "Your last date setup payment is done",
+        message: `Your Date payment for ${remark} to is account ${account_number_to} is Done!!!`,
         user: account_number_from,
       });
 
