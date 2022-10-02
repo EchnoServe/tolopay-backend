@@ -1,7 +1,7 @@
+const mongoose = require("mongoose");
 const User = require("./../models/user");
 const CreditTransaction = require("./../models/creditTransaction");
 const DebitTransaction = require("./../models/debitTransaction");
-const mongoose = require("mongoose");
 
 /**
  *  @desc  user profile
@@ -128,7 +128,7 @@ exports.profileImage = async (req, res, next) => {
     }
   ).select("name username profileimage");
 
-  res.status(200).json({
+  res.status(201).json({
     status: "OK",
     data: {
       user,
