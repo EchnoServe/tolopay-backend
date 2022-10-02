@@ -37,20 +37,6 @@ router.get(
 // call back route for google redirect
 router.get(
   "/google/redirect",
-  passport.authenticate("google"),
-  (req, res) => {}
-);
-
-router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
-
-// call back route for google redirect
-router.get(
-  "/google/redirect",
   passport.authenticate("google", {
     successRedirect: "http://localhost:3000/login/success",
   })
