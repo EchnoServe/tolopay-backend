@@ -5,6 +5,9 @@ const RecurrentTransaction = require("./models/recurrenttransaction");
 const User = require("./models/user");
 const Notification = require("./models/notification");
 
+//a simple node scheduleJob within seconds to find if there any active recurrentTransactions
+//and done automatic recurrentTransactions  for each
+
 const job = schedule.scheduleJob("* * * * * *", async function () {
   try {
     const recurrentTransactions = await RecurrentTransaction.find({
@@ -39,7 +42,7 @@ const job = schedule.scheduleJob("* * * * * *", async function () {
 
       //:Update next time
       await RecurrentTransaction.create({
-        date: Date.now() + recurrent * 60 * 1000,
+        date: Date.now() + recurrent * 60 * 1000, //simple recurring transaction  with a minute
         recurrent,
         amount,
         account_number_from,
