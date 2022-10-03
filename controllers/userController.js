@@ -1,7 +1,7 @@
+const mongoose = require("mongoose");
 const User = require("./../models/user");
 const CreditTransaction = require("./../models/creditTransaction");
 const DebitTransaction = require("./../models/debitTransaction");
-const mongoose = require("mongoose");
 
 /**
  *  @desc  user profile
@@ -27,22 +27,33 @@ exports.me = async (req, res, next) => {
  */
 
 exports.addBudget = async (req, res, next) => {
+  // {
+  //   "remark": "For Food",
+  //   "amount": "400"
+  // }
+
+  const user = req.user;
+
   if (!req.body) {
     return next(new Error("Please enter the fields in your form correctly"));
   }
   //TODO:check balances
 
-  const user = await User.findByIdAndUpdate(
-    req.user.id,
-    {
-      $push: { budget: req.body },
-    },
-    {
-      new: true,
-    }
-  );
+  let budgeted_before = false;
 
-  res.status(200).json({
+  for (const item of user.budget) {
+    if (item.remark === req.body.remark) {
+      budgeted_before = true;
+      item.amount = parseFloat(item.amount) + parseFloat(req.body.amount);
+      user.save({ validateBeforeSave: false });
+    }
+  }
+  if (!budgeted_before) {
+    user.budget.push({ remark, amount, budgeted: true });
+    user.save({ validateBeforeSave: false });
+  }
+
+  res.status(201).json({
     status: "OK",
     data: {
       user,
@@ -109,7 +120,7 @@ exports.profileImage = async (req, res, next) => {
     }
   ).select("name username profileimage");
 
-  res.status(200).json({
+  res.status(201).json({
     status: "OK",
     data: {
       user,

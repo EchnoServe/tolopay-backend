@@ -12,23 +12,20 @@ const DebitTransaction = require("./../models/debitTransaction");
  *  @access Private
  */
 
-exports.transfer = async (req, res, next) => {
-  const user = req.user;
-  const { phoneNumber, amount, password, remark } = req.body;
-  if (!phoneNumber || !amount || !password || !remark) {
-    return next(new Error("Please enter the fields in your form correctly"));
-  }
-
+exports.transfer = async (
+  { phoneNumber, amount, password, remark, user },
+  recurrent
+) => {
   const receiver_user = await User.findOne({
     phoneNumber,
   });
 
   if (!receiver_user) {
-    return next(new Error("Please enter correct phoneNumber"));
+    throw new Error("Please enter correct phoneNumber");
   }
 
   if (user.balance < amount) {
-    return next(new Error("your balance is not enough"));
+    throw new Error("your balance is not enough");
   }
 
   //TODO:: wrong password  attempts
@@ -39,9 +36,7 @@ exports.transfer = async (req, res, next) => {
     if (item.remark === remark) {
       budgeted = true;
       item.amount =
-        parseFloat(item.amount) > parseFloat(amount)
-          ? item.amount - amount
-          : 0;
+        parseFloat(item.amount) > parseFloat(amount) ? item.amount - amount : 0;
     }
   }
 
@@ -51,16 +46,22 @@ exports.transfer = async (req, res, next) => {
   user.save({ validateBeforeSave: false });
 
   //validate the password is correct
-  if (!(await bcrypt.compare(password, user.password))) {
-    return next(new Error("Incorrect password"));
+  if (!recurrent && !(await bcrypt.compare(password, user.password))) {
+    throw new Error("Incorrect password");
   }
 
   //   DebitTransaction for user
   const previousAmount = user.balance;
   const remainingAmount = user.balance - amount;
-  const newuser = await User.findByIdAndUpdate(user.id, {
-    balance: remainingAmount,
-  }); //
+  const newuser = await User.findByIdAndUpdate(
+    user.id,
+    {
+      balance: remainingAmount,
+    },
+    {
+      new: true,
+    }
+  ); //
 
   const debitTransaction = await DebitTransaction.create({
     user_id: user.id,
@@ -69,9 +70,8 @@ exports.transfer = async (req, res, next) => {
     receiver_user: receiver_user._id,
     transferAmount: amount,
     previousAmount: previousAmount,
-     
+
     currentAmount: remainingAmount,
-    
   });
 
   //creditTransaction
@@ -89,16 +89,14 @@ exports.transfer = async (req, res, next) => {
     transferAmount: amount,
     previousAmount: receiver_user_previousAmount,
     currentAmount: currentAmount,
-    remark:remark,
-    
   });
 
-  res.status(201).json({
+  return {
     status: "OK",
     data: {
       user:newuser,
     },
-  });
+  };
 
   next();
 };
@@ -126,6 +124,4 @@ exports.usertransactions = async (req, res, next) => {
   res.status(200).json({
     transaction,
   });
-
-  next();
 };

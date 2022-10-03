@@ -12,13 +12,6 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 1000,
     },
-    username: {
-      required: [true, "please provide user name !"],
-      
-      type: String,
-      unique: true,
-      lowercase: true,
-    },
     profileimage: String,
     active: {
       type: Boolean,
@@ -27,7 +20,7 @@ const userSchema = new mongoose.Schema(
     budget: [
       {
         remark: { type: String, trim: true },
-        amount: String,
+        amount: Number,
         budgeted: { type: Boolean, default: true },
       },
     ],

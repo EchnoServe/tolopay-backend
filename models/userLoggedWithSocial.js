@@ -32,9 +32,16 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: Number,
     },
-    profilePic: {
+    profileimage: {
         type: String,
-    }
+    },
+    budget: [
+      {
+        remark: { type: String, trim: true },
+        amount: String,
+        budgeted: { type: Boolean, default: true },
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
