@@ -16,9 +16,7 @@ const signToken = (id) => {
  */
 
 exports.signup = async (req, res, next) => {
-  const { name, email, password, passwordConfirm, phoneNumber
-    ,username
-   } = req.body;
+  const { name, email, password, passwordConfirm, phoneNumber } = req.body;
   console.log(email);
   User.findOne({accounts: { google: {email: email}}}, async (err, found)  => {
 
@@ -74,11 +72,11 @@ exports.login = async (req, res, next) => {
 
     const user = await User.findOne({ email }).select("+accounts.password");
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.accounts.local.password))) {
       res.status();
       return next(new Error("incorrect email or password"));
     }
-    user.password = undefined;
+    user.accounts.local.password = undefined;
 
     const token = signToken(user._id);
     res.status(200).json({
