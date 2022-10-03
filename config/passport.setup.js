@@ -30,28 +30,37 @@ passport.use(
 
             User.findOne({email: email}).then(user => {
                 if (user) {
-                    if(user.accounts[1].email){
+                    if(user.accounts.google.email){
                         console.log(`already a user: ${user}`);
                         done(null, user);
                     } else {
                         done( new Error("This email require password to login"));
                     }      
                 } else {
+                    User.findOne().sort({account_number:-1}).limit(1).exec((err, found) => {
                     
-                    new User({
-                        name: profile.displayName,
-                        email: email,
-                        profileimage: profile.photos[0].value,
-                        accounts: [
-                            {
-                                uid: profile.id,
-                                email: email,
+                        const newAccountNum = found === null ? 1000 : found.account_number + 1;
+
+                        new User({
+                            name: profile.displayName,
+                            email: email,
+                            profileimage: profile.photos[0].value,
+                            account_number: newAccountNum,
+                            accounts: {
+                                google: {
+                                    uid: profile.id,
+                                    email: email,
+                                }
                             }
-                        ]
-                    }).save().then(newUser => {
-                        console.log(`new user: ${newUser}`);
-                        done(null, newUser );
+                        }).save().then(newUser => {
+                            console.log(`new user: ${newUser}`);
+                            done(null, newUser );
+                        });
                     });
+                    const lastEntryID = User.find().all;
+                    
+                    
+                    
                 }
             })  
         }

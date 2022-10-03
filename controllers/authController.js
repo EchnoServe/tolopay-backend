@@ -19,21 +19,29 @@ exports.signup = async (req, res, next) => {
   const { name, email, password, passwordConfirm, phoneNumber
     ,username
    } = req.body;
-
-  User.findOne({"accounts.email": email}, async (err, found)  => {
+  console.log(email);
+  User.findOne({accounts: { google: {email: email}}}, async (err, found)  => {
 
     if (found) {
+
+      console.log("found: " + found.accounts);
       next(new Error("This email is already registered with google sign in"));
     } else {
-      // User.findOneAndUpdate({lastAccount: })
-      const user = await User.create({
-        name: name,
-        email: email,
-        account_number: username,
-        "accounts.password": password,
-        "accounts.passwordConfirm": passwordConfirm,
-        phoneNumber,
-      });
+      let newAccountNum;
+      User.findOne().sort({account_number:-1}).limit(1).exec( async (err, found) => {
+        
+      newAccountNum = found === null ? 1000 : found.account_number + 1;
+      
+    });
+
+    const user = await User.create({
+      name: name,
+      email: email,
+      account_number: newAccountNum,
+      accounts: {local: {password: password}},
+      accounts: {local: {passwordConfirm: passwordConfirm }},
+      phoneNumber,
+    });
     
       const token = signToken(user._id);
     

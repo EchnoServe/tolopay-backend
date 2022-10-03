@@ -49,8 +49,8 @@ const userSchema = new mongoose.Schema(
         budgeted: { type: Boolean, default: true },
       },
     ],
-    accounts: [
-      {
+    accounts: {
+     local : {
         password: {
           type: String,
           // required: [true, "please provide your password"],
@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema(
         },
         
       },
-      {
+      google : {
         uid: {
           type: String
         },
@@ -79,7 +79,7 @@ const userSchema = new mongoose.Schema(
       }
      
 
-    ],
+    },
   },
   {
     toJSON: { virtuals: true },
