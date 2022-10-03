@@ -53,9 +53,15 @@ exports.transfer = async (
   //   DebitTransaction for user
   const previousAmount = user.balance;
   const remainingAmount = user.balance - amount;
-  const newuser = await User.findByIdAndUpdate(user.id, {
-    balance: remainingAmount,
-  }); //
+  const newuser = await User.findByIdAndUpdate(
+    user.id,
+    {
+      balance: remainingAmount,
+    },
+    {
+      new: true,
+    }
+  ); //
 
   const debitTransaction = await DebitTransaction.create({
     user_id: user.id,
@@ -114,6 +120,4 @@ exports.usertransactions = async (req, res, next) => {
   res.status(200).json({
     transaction,
   });
-
-  next();
 };

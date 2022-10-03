@@ -4,6 +4,12 @@ const recurrentTransactionController = require("./../controllers/recurrentTransa
 
 const router = express.Router();
 
+router.get(
+  "/",
+  protect,
+  recurrentTransactionController.getRecurrentTransaction
+);
+
 router.post(
   "/",
   protect,

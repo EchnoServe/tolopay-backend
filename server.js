@@ -54,7 +54,8 @@ const job = schedule.scheduleJob("* * * * * *", async function () {
       await recurrentTransaction.save();
     }
   } catch (ex) {
-    console.log(ex.message);
+    console.log(ex.message)
+   
   }
 });
 

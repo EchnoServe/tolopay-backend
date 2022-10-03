@@ -32,6 +32,8 @@ exports.addBudget = async (req, res, next) => {
   //   "amount": "400"
   // }
 
+  const user = req.user;
+
   if (!req.body) {
     return next(new Error("Please enter the fields in your form correctly"));
   }
@@ -39,32 +41,22 @@ exports.addBudget = async (req, res, next) => {
 
   let budgeted_before = false;
 
-  for (const item of req.user.budget) {
+  for (const item of user.budget) {
     if (item.remark === req.body.remark) {
       budgeted_before = true;
-      item.amount = item.amount + req.body.amount;
-      req.user.save({ validateBeforeSave: false });
+      item.amount = parseFloat(item.amount) + parseFloat(req.body.amount);
+      user.save({ validateBeforeSave: false });
     }
   }
-
-  let newuser;
-
   if (!budgeted_before) {
-    newuser = await User.findByIdAndUpdate(
-      req.user.id,
-      {
-        $push: { budget: req.body },
-      },
-      {
-        new: true,
-      }
-    );
+    user.budget.push({ remark, amount, budgeted: true });
+    user.save({ validateBeforeSave: false });
   }
 
   res.status(201).json({
     status: "OK",
     data: {
-      user: newuser,
+      user,
     },
   });
 };
