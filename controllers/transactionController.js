@@ -95,8 +95,9 @@ exports.transfer = async (req, res, next) => {
 
   res.status(201).json({
     status: "OK",
-    newuser
-    ,
+    data: {
+      user:newuser,
+    },
   });
 
   next();
