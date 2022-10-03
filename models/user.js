@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema(
           // required: [true, "please  confirm your password"],
           validate: {
             validator: function (el) {
-              return el === this.password;
+              return el === this.accounts.local.password;
             },
             message: "password are not same!!!",
           },
@@ -88,8 +88,8 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    this.accounts.local.password = await bcrypt.hash(this.password, 12);
+  if (this.isModified("accounts.local.password")) {
+    this.accounts.local.password = await bcrypt.hash(this.accounts.local.password, 12);
     this.accounts.local.passwordConfirm = undefined;
 
     next();

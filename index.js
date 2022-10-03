@@ -22,7 +22,9 @@ app.use(
     secret: keys.session.cookieKey,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: { 
+      // secure: true
+     },
   })
 );
 

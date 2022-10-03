@@ -21,24 +21,23 @@ exports.signup = async (req, res, next) => {
   User.findOne({accounts: { google: {email: email}}}, async (err, found)  => {
 
     if (found) {
-
-      console.log("found: " + found.accounts);
       next(new Error("This email is already registered with google sign in"));
     } else {
-      let newAccountNum;
+
       User.findOne().sort({account_number:-1}).limit(1).exec( async (err, found) => {
         
-      newAccountNum = found === null ? 1000 : found.account_number + 1;
-      
-    });
+      const newAccountNum = found === null ? 1000 : found.account_number + 1;
+
+      console.log(newAccountNum);
 
     const user = await User.create({
       name: name,
       email: email,
       account_number: newAccountNum,
-      accounts: {local: {password: password}},
-      accounts: {local: {passwordConfirm: passwordConfirm }},
-      phoneNumber,
+      accounts: {local: {
+        password: password,
+        passwordConfirm: passwordConfirm }},
+      phoneNumber: phoneNumber,
     });
     
       const token = signToken(user._id);
@@ -50,6 +49,8 @@ exports.signup = async (req, res, next) => {
           user,
         },
       });
+      
+    });
     }
   })
 
@@ -70,9 +71,11 @@ exports.login = async (req, res, next) => {
       return next(new Error("provide email and password"));
     }
 
-    const user = await User.findOne({ email }).select("+accounts.password");
+    const user = await User.findOne({ email }).select("+accounts.local.password");
 
-    if (!user || !(await bcrypt.compare(password, user.accounts.local.password))) {
+    console.log(user.accounts.local.password + " = " + password);
+
+    if (!user || !(await bcrypt.compare(password, user.accounts.local.password ))) {
       res.status();
       return next(new Error("incorrect email or password"));
     }
@@ -94,12 +97,14 @@ exports.login = async (req, res, next) => {
 exports.loginSocial = async (req, res, next) => {
   const user = req.user;
 
+  console.log("final user data: " + user);
+
   const token = signToken(user._id);
     res.status(200).json({
       status: "OK",
       data: {
         token,
-        user: user,
+        user,
       },
     });
 }

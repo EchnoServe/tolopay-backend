@@ -29,7 +29,7 @@ router.get("/logout", authController.logout);
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["profile", "email"], session: false
+    scope: ["profile", "email"],
   })
 );
 
