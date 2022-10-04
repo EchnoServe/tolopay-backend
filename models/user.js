@@ -35,7 +35,6 @@ const userSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: Number,
-      unique: true,
     },
     profileimage: String,
     active: {
@@ -88,7 +87,7 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
-  if (this.isModified("accounts.local.password")) {
+  if (this.isModified("accounts.local.password") && this.accounts.local.password) {
     this.accounts.local.password = await bcrypt.hash(this.accounts.local.password, 12);
     this.accounts.local.passwordConfirm = undefined;
 

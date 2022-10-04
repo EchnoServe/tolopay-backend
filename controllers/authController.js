@@ -97,10 +97,13 @@ exports.login = async (req, res, next) => {
 exports.loginSocial = async (req, res, next) => {
   const user = req.user;
 
+  // req.session.destroy();
   console.log("final user data: " + user);
 
   const token = signToken(user._id);
-    res.status(200).json({
+  console.log(token);
+
+  res.status(200).json({
       status: "OK",
       data: {
         token,

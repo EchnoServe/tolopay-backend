@@ -58,9 +58,6 @@ passport.use(
                             done(null, newUser );
                         });
                     });
-                    const lastEntryID = User.find().all;
-                    
-                    
                     
                 }
             })  
