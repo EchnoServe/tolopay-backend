@@ -9,10 +9,7 @@ const creditTransactionSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-  remark: {
-    type: String,
-    require: true,
-  },
+
   send_user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
