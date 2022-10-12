@@ -7,7 +7,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-router.post("/signup", authController.signup);
+router.post("/signup",  authController.signup);
 router.post("/login", authController.login);
 
 router.get("/me", protect, userController.me);

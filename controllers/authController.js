@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const passport = require("passport");
+
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY, {
@@ -16,26 +16,45 @@ const signToken = (id) => {
  */
 
 exports.signup = async (req, res, next) => {
-  const { name, email, password, passwordConfirm, phoneNumber,username } = req.body;
+  const { name, email, password, passwordConfirm, phoneNumber } = req.body;
+  console.log(email);
+  User.findOne({accounts: { google: {email: email}}}, async (err, found)  => {
 
-  const user = await User.create({
-    name,
-    email,
-    password,
-    passwordConfirm,
-    phoneNumber,
-    username
-  });
+    if (found) {
+      next(new Error("This email is already registered with google sign in"));
+    } else {
 
-  const token = signToken(user._id);
+      User.findOne().sort({account_number:-1}).limit(1).exec( async (err, found) => {
+        
+      const newAccountNum = found === null ? 1000 : found.account_number + 1;
 
-  res.status(201).json({
-    status: "OK",
-    data: {
-      token,
-      user,
-    },
-  });
+      console.log(newAccountNum);
+
+    const user = await User.create({
+      name: name,
+      email: email,
+      account_number: newAccountNum,
+      accounts: {local: {
+        password: password,
+        passwordConfirm: passwordConfirm }},
+      phoneNumber: phoneNumber,
+    });
+    
+      const token = signToken(user._id);
+    
+      res.status(201).json({
+        status: "OK",
+        data: {
+          token,
+          user,
+        },
+      });
+      
+    });
+    }
+  })
+
+
 };
 
 /**
@@ -52,13 +71,15 @@ exports.login = async (req, res, next) => {
       return next(new Error("provide email and password"));
     }
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+accounts.local.password");
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    console.log(user.accounts.local.password + " = " + password);
+
+    if (!user || !(await bcrypt.compare(password, user.accounts.local.password ))) {
       res.status();
       return next(new Error("incorrect email or password"));
     }
-    user.password = undefined;
+    user.accounts.local.password = undefined;
 
     const token = signToken(user._id);
     res.status(200).json({
@@ -76,12 +97,17 @@ exports.login = async (req, res, next) => {
 exports.loginSocial = async (req, res, next) => {
   const user = req.user;
 
+  // req.session.destroy();
+  console.log("final user data: " + user);
+
   const token = signToken(user._id);
-    res.status(200).json({
+  console.log(token);
+
+  res.status(200).json({
       status: "OK",
       data: {
         token,
-        user: user._id,
+        user,
       },
     });
 }

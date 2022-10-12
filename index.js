@@ -24,7 +24,9 @@ app.use(
     secret: keys.session.cookieKey,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: { 
+      // secure: true
+     },
   })
 );
 
@@ -46,6 +48,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
+    credentials: true
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
