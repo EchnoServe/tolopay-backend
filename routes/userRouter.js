@@ -54,4 +54,6 @@ router.get(
   authController.loginSocial
 );
 
+router.get("/forgotpassword", authController.forgot )
+
 module.exports = router;
