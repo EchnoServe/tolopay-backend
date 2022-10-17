@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const imp = require("../config/keys");
 
 
 const signToken = (id) => {
@@ -132,23 +134,27 @@ exports.forgot = async (req, res, next) => {
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "adarsh438tcsckandivali@gmail.com",
-        pass: "rmdklolcsmswvyfw",
+        user: imp.email.email,
+        pass: imp.email.pass,
+        
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     var mailOptions = {
-      from: "youremail@gmail.com",
-      to: "thedebugarena@gmail.com",
+      from: imp.email.email,
+      to: email,
       subject: "Password Reset",
       text: link,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        next(new Error("Couldn't send email, try again later!"))
       } else {
-        console.log("Email sent: " + info.response);
+       console.log("Email sent: " + info.response);
       }
     });
     console.log(link);
