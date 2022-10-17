@@ -152,9 +152,12 @@ exports.forgot = async (req, res, next) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        next(new Error("Couldn't send email, try again later!"))
+        next(new Error("Couldn't send email, try again later!"));
       } else {
        console.log("Email sent: " + info.response);
+       res.status(200).json({
+        message: 'success'
+       });
       }
     });
     console.log(link);
