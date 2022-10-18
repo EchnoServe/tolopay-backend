@@ -122,6 +122,7 @@ exports.logout = async (req, res, next) => {
 
 exports.forgot = async (req, res, next) => {
   const { email } = req.body;
+  
   const oldUser = await User.findOne({ email });
     if (!oldUser || !oldUser.accounts.local ) {
       return res.json({ status: "User Not Exists!!" });
