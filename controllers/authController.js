@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const imp = require("../config/keys");
 
+const JWT_SECRET = "alkjeih3409329adlkfjladjf$dfuo3jj3alkj";
+
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY, {
@@ -127,12 +129,12 @@ exports.forgot = async (req, res, next) => {
     if (!oldUser || !oldUser.accounts.local ) {
       return res.json({ status: "User Not Exists!!" });
     }
-    const JWT_SECRET = "alkjeih3409329adlkfjladjf$dfuo3jj3alkj";
+    
     const secret = JWT_SECRET + oldUser.accounts.local.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "5m",
+      expiresIn: "30m",
     });
-    const link = `http://localhost:8000/reset-password/${oldUser._id}/${token}`;
+    const link = `http://localhost:8000/api/v1/users/reset-password/${oldUser._id}/${token}`;
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -166,6 +168,27 @@ exports.forgot = async (req, res, next) => {
 }
 
 exports.reset = async (req, res, next) => {
+  console.log('hello');
   const { id, token } = req.params;
   console.log(req.params);
+
+  const oldUser = await User.findOne({ _id : id });
+  
+  if (!oldUser) {
+    res.json({status : "user doesn't exist"});
+  }
+
+  const secret = JWT_SECRET + oldUser.password;
+  try {
+    const verify = jwt.verify(token, secret);
+
+    const url = "http://localhost:3000/reset-password";
+    // res.cookie('token', token, url);
+    res.status(302).redirect(url + `/${oldUser.id}/${token}`);
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "Something Went Wrong" });
+  }
+
+  
 }
