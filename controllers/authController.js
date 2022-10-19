@@ -122,7 +122,7 @@ exports.logout = async (req, res, next) => {
 
 exports.forgot = async (req, res, next) => {
   const { email } = req.body;
-  
+
   const oldUser = await User.findOne({ email });
     if (!oldUser || !oldUser.accounts.local ) {
       return res.json({ status: "User Not Exists!!" });
@@ -151,7 +151,7 @@ exports.forgot = async (req, res, next) => {
       text: link,
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         next(new Error("Couldn't send email, try again later!"));
       } else {
@@ -162,4 +162,9 @@ exports.forgot = async (req, res, next) => {
       }
     });
     console.log(link);
+}
+
+exports.reset = async (req, res, next) => {
+  const { id, token } = req.params;
+  console.log(req.params);
 }
