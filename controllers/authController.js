@@ -178,9 +178,11 @@ exports.reset = async (req, res, next) => {
     res.json({status : "user doesn't exist"});
   }
 
-  const secret = JWT_SECRET + oldUser.password;
+  const secret = JWT_SECRET + oldUser.accounts.local.password;
   try {
     const verify = jwt.verify(token, secret);
+
+    console.log(verify);
 
     const url = "http://localhost:3000/reset-password";
     // res.cookie('token', token, url);
@@ -191,4 +193,38 @@ exports.reset = async (req, res, next) => {
   }
 
   
+}
+
+exports.changePassword = async (req, res, next) => {
+  
+  const { id, token, password, confirmPassword } = req.body;
+
+  const user = await User.findOne({_id : id});
+
+  if (!user) {
+    res.json({status : "We are having an issue! couldn't perform operation."});
+  }
+
+  const secret = JWT_SECRET + user.accounts.local.password;
+
+  try {
+    const verify = jwt.verify(token, secret);
+
+    console.log(verify);
+
+    await user.updateOne({_id: id}, {$set: {
+      accounts: {local: {
+        password: password,
+        passwordConfirm: confirmPassword }}
+    }})
+
+    res.json({
+      status: 'success'
+    })
+    
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "Something Went Wrong" });
+  }
+
 }
