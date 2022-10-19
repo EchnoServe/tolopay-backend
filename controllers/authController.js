@@ -127,6 +127,7 @@ exports.forgot = async (req, res, next) => {
     if (!oldUser || !oldUser.accounts.local ) {
       return res.json({ status: "User Not Exists!!" });
     }
+    const JWT_SECRET = "alkjeih3409329adlkfjladjf$dfuo3jj3alkj";
     const secret = JWT_SECRET + oldUser.accounts.local.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "5m",
