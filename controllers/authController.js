@@ -79,7 +79,16 @@ exports.login = async (req, res, next) => {
 
     console.log(user.accounts.local.password + " = " + password);
 
-    if (!user || !(await bcrypt.compare(password, user.accounts.local.password ))) {
+    const compare = await bcrypt.compare(password, user.accounts.local.password, (err, success) => {
+      if(err){
+        console.log(err);
+      } else {
+        console.log("password is" + success);
+      }
+
+    });
+
+    if (!user || !compare) {
       res.status();
       return next(new Error("incorrect email or password"));
     }
@@ -125,14 +134,14 @@ exports.logout = async (req, res, next) => {
 exports.forgot = async (req, res, next) => {
   const { email } = req.body;
 
-  const oldUser = await User.findOne({ email });
+  const oldUser = await User.findOne({ email }).select("+accounts.local.password");
     if (!oldUser || !oldUser.accounts.local ) {
-      return res.json({ status: "User Not Exists!!" });
+      return res.json({ status: "User doesn't Exists!!" });
     }
     
     const secret = JWT_SECRET + oldUser.accounts.local.password;
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "30m",
+      expiresIn: "200m",
     });
     const link = `http://localhost:8000/api/v1/users/reset-password/${oldUser._id}/${token}`;
     var transporter = nodemailer.createTransport({
@@ -170,9 +179,9 @@ exports.forgot = async (req, res, next) => {
 exports.reset = async (req, res, next) => {
   console.log('hello');
   const { id, token } = req.params;
-  console.log(req.params);
 
-  const oldUser = await User.findOne({ _id : id });
+  const oldUser = await User.findOne({ _id : id }).select("+accounts.local.password");
+
   
   if (!oldUser) {
     res.json({status : "user doesn't exist"});
@@ -185,11 +194,10 @@ exports.reset = async (req, res, next) => {
     console.log(verify);
 
     const url = "http://localhost:3000/reset-password";
-    // res.cookie('token', token, url);
     res.status(302).redirect(url + `/${oldUser.id}/${token}`);
   } catch (error) {
     console.log(error);
-    res.json({ status: "Something Went Wrong" });
+    res.json({ status: "We have exprienced an issue!" });
   }
 
   
@@ -199,7 +207,7 @@ exports.changePassword = async (req, res, next) => {
   
   const { id, token, password, confirmPassword } = req.body;
 
-  const user = await User.findOne({_id : id});
+  const user = await User.findOne({_id : id}).select("+accounts.local.password");
 
   if (!user) {
     res.json({status : "We are having an issue! couldn't perform operation."});
@@ -208,15 +216,57 @@ exports.changePassword = async (req, res, next) => {
   const secret = JWT_SECRET + user.accounts.local.password;
 
   try {
-    const verify = jwt.verify(token, secret);
+    jwt.verify(token, secret);
 
-    console.log(verify);
+    console.log(user.accounts.local);
 
-    await user.updateOne({_id: id}, {$set: {
-      accounts: {local: {
-        password: password,
-        passwordConfirm: confirmPassword }}
-    }})
+    // const updatedUser = await User.findOneAndUpdate({_id: id}, {
+    //   accounts: {
+    //     local: {
+    //       password: password,
+    //       passwordConfirm: confirmPassword
+    //     }
+    //   }
+    // }, {
+    //   upsert: true,
+    //   new: true
+    // }).select("+accounts.local.password");
+
+
+    user.accounts.local.password = password;
+    user.accounts.local.passwordConfirm = confirmPassword;
+    const returnValue = await user.save();
+    // .then(value => {
+
+    // });
+
+    console.log('update value' + updatedUser);
+    console.log('save return' + returnValue)
+
+    // await bcrypt.hash(updatedUser.accounts.local.password, 12,
+    //  async (err, hash) => {
+    //   if (err) {
+    //     throw (err);
+    //   }
+    //   updatedUser.accounts.local.password = hash;
+    //   updatedUser.accounts.local.passwordConfirm = undefined;
+
+    //   updatedUser.save();
+    //   await bcrypt.compare(password, hash, (err, success) => {
+    //     if(err){
+    //       console.log(err);
+    //     } else {
+    //       console.log("password is" + success);
+    //     }
+  
+    //   });
+
+    //   console.log(updatedUser);
+      
+    // });
+    
+
+    
 
     res.json({
       status: 'success'
