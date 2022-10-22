@@ -54,4 +54,10 @@ router.get(
   authController.loginSocial
 );
 
+router.post("/forgot-password", authController.forgot );
+
+router.get("/reset-password/:id/:token", authController.reset );
+
+router.post("/change-password", authController.changePassword );
+
 module.exports = router;
