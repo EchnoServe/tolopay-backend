@@ -77,30 +77,26 @@ exports.login = async (req, res, next) => {
 
     const user = await User.findOne({ email }).select("+accounts.local.password");
 
-    console.log(user.accounts.local.password + " = " + password);
-
-    const compare = await bcrypt.compare(password, user.accounts.local.password, (err, success) => {
+    await bcrypt.compare(password, user.accounts.local.password, (err, success) => {
       if(err){
-        console.log(err);
+        next(err);
       } else {
-        console.log("password is" + success);
+
+        if (!user || !success) {
+          res.status();
+          return next(new Error("incorrect email or password"));
+        }
+    
+        const token = signToken(user._id);
+        res.status(200).json({
+          status: "OK",
+          data: {
+            token,
+            user,
+          },
+        });
       }
 
-    });
-
-    if (!user || !compare) {
-      res.status();
-      return next(new Error("incorrect email or password"));
-    }
-    user.accounts.local.password = undefined;
-
-    const token = signToken(user._id);
-    res.status(200).json({
-      status: "OK",
-      data: {
-        token,
-        user,
-      },
     });
   } catch (ex) {
     next(ex);
@@ -110,11 +106,7 @@ exports.login = async (req, res, next) => {
 exports.loginSocial = async (req, res, next) => {
   const user = req.user;
 
-  // req.session.destroy();
-  console.log("final user data: " + user);
-
   const token = signToken(user._id);
-  console.log(token);
 
   res.status(200).json({
       status: "OK",
@@ -182,7 +174,6 @@ exports.reset = async (req, res, next) => {
 
   const oldUser = await User.findOne({ _id : id }).select("+accounts.local.password");
 
-  
   if (!oldUser) {
     res.json({status : "user doesn't exist"});
   }
@@ -190,8 +181,6 @@ exports.reset = async (req, res, next) => {
   const secret = JWT_SECRET + oldUser.accounts.local.password;
   try {
     const verify = jwt.verify(token, secret);
-
-    console.log(verify);
 
     const url = "http://localhost:3000/reset-password";
     res.status(302).redirect(url + `/${oldUser.id}/${token}`);
@@ -218,60 +207,15 @@ exports.changePassword = async (req, res, next) => {
   try {
     jwt.verify(token, secret);
 
-    console.log(user.accounts.local);
-
-    // const updatedUser = await User.findOneAndUpdate({_id: id}, {
-    //   accounts: {
-    //     local: {
-    //       password: password,
-    //       passwordConfirm: confirmPassword
-    //     }
-    //   }
-    // }, {
-    //   upsert: true,
-    //   new: true
-    // }).select("+accounts.local.password");
-
-
     user.accounts.local.password = password;
     user.accounts.local.passwordConfirm = confirmPassword;
     const returnValue = await user.save();
-    // .then(value => {
 
-    // });
-
-    console.log('update value' + updatedUser);
-    console.log('save return' + returnValue)
-
-    // await bcrypt.hash(updatedUser.accounts.local.password, 12,
-    //  async (err, hash) => {
-    //   if (err) {
-    //     throw (err);
-    //   }
-    //   updatedUser.accounts.local.password = hash;
-    //   updatedUser.accounts.local.passwordConfirm = undefined;
-
-    //   updatedUser.save();
-    //   await bcrypt.compare(password, hash, (err, success) => {
-    //     if(err){
-    //       console.log(err);
-    //     } else {
-    //       console.log("password is" + success);
-    //     }
-  
-    //   });
-
-    //   console.log(updatedUser);
-      
-    // });
-    
-
-    
+    console.log('save return' + returnValue.accounts.local);
 
     res.json({
       status: 'success'
     })
-    
   } catch (error) {
     console.log(error);
     res.json({ status: "Something Went Wrong" });

@@ -76,9 +76,7 @@ const userSchema = new mongoose.Schema(
           type: String
         }
       }
-     
-
-    },
+   },
   },
   {
     toJSON: { virtuals: true },
@@ -88,40 +86,13 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   if (this.isModified("accounts.local.password") && this.accounts.local.password) {
+    console.log('in pre save: ' + this.accounts.local);
     this.accounts.local.password = await bcrypt.hash(this.accounts.local.password, 12);
     this.accounts.local.passwordConfirm = undefined;
+    console.log('in pre save after hash: ' + this.accounts.local);
   }
   next();
 });
-
-// userSchema.pre("save", async function (next) {
-
-//  const data = this.getUpdate();
-
-// //  console.log(data);
-// //  console.log(this.accounts.local.password);
-
-
-//   if(data.accounts.local.password) {
-
-//     findOne({}).select("+accounts.local.password");
-
-//     // userSchema.pre("findOneAndUpdate", async function (next) {
-//     //   console.log(this.isModified("accounts.local.password"));
-//     // })
-//     // this.accounts.local.password = await bcrypt.hash(data.accounts.local.password, 12);
-//     // this.accounts.local.passwordConfirm = undefined;
-
-//     // try { 
-//     //  this.updateOne({}, data).exec().then(res => {
-//     //    console.log(res);
-//     //  });
-//     // } catch (error) {
-//     //   console.log(error);
-//     // }
-//   }
-//   next();
-// });
 
 userSchema.virtual("creditTransactions", {
   ref: "creditTransaction",
