@@ -1,6 +1,5 @@
 const passport = require("passport");
 const User = require("../models/user");
-const UserSocial = require("../models/userLoggedWithSocial");
 const GoogleStrategy = require("passport-google-oauth20");
 const keys = require("./keys");
 
@@ -9,15 +8,11 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    
-    UserSocial.findOne({_id: id}, (err, user) => {
-        if(err) {
-            done(err);
-        } else {
-            done(null, user);
-        }
-        
-    });
+
+    User.findById(id).then((user) => {
+        console.log("deserialized profile: " + user);
+        done(null, user);
+    })
     
 });
 
@@ -37,31 +32,37 @@ passport.use(
 
             User.findOne({email: email}).then(user => {
                 if (user) {
-                    done( new Error("This email require password to login") );
+                    if(user.accounts.google.email){
+                        console.log(`already a user: ${user}`);
+                        done(null, user);
+                    } else {
+                        done( new Error("This email require password to login"));
+                    }      
                 } else {
-                    UserSocial.findOne({email: email}, (err, currentUser) => {
-                        if (err) {
-                            done(err);
-                        }
-                        if (currentUser) {
-                            done(null, currentUser);
-                        } else {
-                            new UserSocial({
-                                name: profile.displayName,
-                                email: email,
-                                profileimage: profile.photos[0].value,
-                            }).save().then(newUser => {
-                                console.log("reached new");
-                                done(null, newUser );
-                            })
-                        }
+                    User.findOne().sort({account_number:-1}).limit(1).exec((err, found) => {
+                    
+                        const newAccountNum = found === null ? 1000 : found.account_number + 1;
+
+                        new User({
+                            name: profile.displayName,
+                            email: email,
+                            profileimage: profile.photos[0].value,
+                            account_number: newAccountNum,
+                            accounts: {
+                                google: {
+                                    uid: profile.id,
+                                    email: email,
+                                }
+                            }
+                        }).save().then(newUser => {
+                            console.log(`new user: ${newUser}`);
+                            done(null, newUser );
+                        });
+
                     });
+                    
                 }
-            })
-
-            
-
-            
+            })  
         }
     )
 )

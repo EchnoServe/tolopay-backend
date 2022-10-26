@@ -7,7 +7,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-router.post("/signup", authController.signup);
+router.post("/signup",  authController.signup);
 router.post("/login", authController.login);
 
 router.get("/me", protect, userController.me);
@@ -53,5 +53,11 @@ router.get(
   },
   authController.loginSocial
 );
+
+router.post("/forgot-password", authController.forgot );
+
+router.get("/reset-password/:id/:token", authController.reset );
+
+router.post("/change-password", authController.changePassword );
 
 module.exports = router;
