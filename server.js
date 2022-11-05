@@ -15,7 +15,7 @@ const job = schedule.scheduleJob("* * * * * *", async function () {
       date: { $lte: Date.now() },
     });
 
-    console.log(recurrentTransactions);
+    // console.log(recurrentTransactions);
 
     for await (const recurrentTransaction of recurrentTransactions) {
       const {

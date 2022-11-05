@@ -9,12 +9,12 @@ const router = express.Router();
 
 router.post("/transfer", protect, async (req, res, next) => {
   const user = req.user;
-  const { phoneNumber, amount, password, remark } = req.body;
+  const { account_number, amount, password, remark } = req.body;
 
   try {
     const newuser = await transfer(
       {
-        phoneNumber,
+        account_number,
         amount,
         password,
         remark,
