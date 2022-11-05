@@ -33,6 +33,8 @@ exports.addBudget = async (req, res, next) => {
   // }
 
   const user = req.user;
+  const remark= req.body.remark;
+  const amount= req.body.amount;
 
   if (!req.body) {
     return next(new Error("Please enter the fields in your form correctly"));

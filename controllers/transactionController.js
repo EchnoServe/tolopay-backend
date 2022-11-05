@@ -93,8 +93,12 @@ exports.transfer = async (
 
   return {
     status: "OK",
-    newuser,
+    data: {
+      user:newuser,
+    },
   };
+
+  next();
 };
 
 /**
