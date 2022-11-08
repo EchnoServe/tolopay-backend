@@ -13,11 +13,11 @@ const DebitTransaction = require("./../models/debitTransaction");
  */
 
 exports.transfer = async (
-  { phoneNumber, amount, password, remark, user },
+  { account_number, amount, password, remark, user },
   recurrent
 ) => {
   const receiver_user = await User.findOne({
-    phoneNumber,
+    account_number,
   });
 
   if (!receiver_user) {
@@ -93,8 +93,12 @@ exports.transfer = async (
 
   return {
     status: "OK",
-    newuser,
+    data: {
+      user:newuser,
+    },
   };
+
+  next();
 };
 
 /**
