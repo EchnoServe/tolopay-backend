@@ -8,6 +8,7 @@ const passport = require("passport");
 const router = express.Router();
 
 router.post("/signup",  authController.signup);
+
 router.post("/login", authController.login);
 
 router.get("/me", protect, userController.me);
@@ -20,7 +21,7 @@ router.get("/moneyin", protect, userController.moneyin);
 
 router.post("/change-info", userController.changeInfo );
 
-router.post("/change-password", userController.changePassword );
+router.post("/user-change-password", userController.changePassword );
 
 router.post(
   "/profileImage",

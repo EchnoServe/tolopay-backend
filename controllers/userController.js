@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./../models/user");
+const bcrypt = require("bcryptjs");
 const CreditTransaction = require("./../models/creditTransaction");
 const DebitTransaction = require("./../models/debitTransaction");
 
@@ -131,41 +132,59 @@ exports.profileImage = async (req, res, next) => {
 };
 
 exports.changeInfo = async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(
-    req.user.id,
+  const { id, name, email, phoneNumber } = req.body;
+  User.findByIdAndUpdate(
+    id,
     {
-      name: req.user.name,
-      email: req.user.email,
-      phoneNumber: req.user.phoneNumber
+      name: name,
+      email: email,
+      phoneNumber: phoneNumber
     },{
       new: true,
     }
-  )
-  res.status(201).json({
-    status: "OK",
-    data: {
-      user
-    }
-  });
+  ).then(updatedUser => {
+    res.status(201).json({
+      status: "OK",
+      data: {
+        updatedUser
+      }
+    });
+  }).catch(err => {
+    res.json({
+      status: "Couldn't Update info"
+    })
+  })
+  
 }
 
 exports.changePassword = async (req, res, next) => {
-  const { id, password, confirmPassword } = req.body;
+  const { id, oldPassword, password, confirmPassword } = req.body;
 
   const user = await User.findOne({_id : id}).select("+accounts.local.password");
-
+  
+  if (!user){
+    res.json({ status: "auth error"})
+  }
   try {
     // jwt.verify(token, secret);
+    bcrypt.compare(oldPassword, user.accounts.local.password, async (err, success) => {
+      if(err){
+        next(err);
+      } else {
+        user.accounts.local.password = password;
+        user.accounts.local.passwordConfirm = confirmPassword;
+        const returnValue = await user.save();
+    
+        console.log('save return' + returnValue.accounts.local);
+    
+        res.json({
+          status: 'success'
+        })
+        
+      }
 
-    user.accounts.local.password = password;
-    user.accounts.local.passwordConfirm = confirmPassword;
-    const returnValue = await user.save();
-
-    console.log('save return' + returnValue.accounts.local);
-
-    res.json({
-      status: 'success'
-    })
+    });
+ 
   } catch (error) {
     console.log(error);
     res.json({ status: "Something Went Wrong" });
