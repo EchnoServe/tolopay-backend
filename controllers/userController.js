@@ -120,7 +120,7 @@ exports.profileImage = async (req, res, next) => {
     {
       new: true,
     }
-  ).select("name username profileimage");
+  ).select("name account_number profileimage");
 
   res.status(201).json({
     status: "OK",
@@ -129,3 +129,46 @@ exports.profileImage = async (req, res, next) => {
     },
   });
 };
+
+exports.changeInfo = async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      name: req.user.name,
+      email: req.user.email,
+      phoneNumber: req.user.phoneNumber
+    },{
+      new: true,
+    }
+  )
+  res.status(201).json({
+    status: "OK",
+    data: {
+      user
+    }
+  });
+}
+
+exports.changePassword = async (req, res, next) => {
+  const { id, password, confirmPassword } = req.body;
+
+  const user = await User.findOne({_id : id}).select("+accounts.local.password");
+
+  try {
+    // jwt.verify(token, secret);
+
+    user.accounts.local.password = password;
+    user.accounts.local.passwordConfirm = confirmPassword;
+    const returnValue = await user.save();
+
+    console.log('save return' + returnValue.accounts.local);
+
+    res.json({
+      status: 'success'
+    })
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "Something Went Wrong" });
+  }
+
+}

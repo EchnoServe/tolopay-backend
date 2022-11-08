@@ -18,6 +18,10 @@ router.get("/moneyout", protect, userController.moneyout);
 
 router.get("/moneyin", protect, userController.moneyin);
 
+router.post("/change-info", userController.changeInfo );
+
+router.post("/change-password", userController.changePassword );
+
 router.post(
   "/profileImage",
   protect,
