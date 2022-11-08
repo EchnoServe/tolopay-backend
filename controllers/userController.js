@@ -167,7 +167,7 @@ exports.changePassword = async (req, res, next) => {
   }
   try {
     // jwt.verify(token, secret);
-    bcrypt.compare(oldPassword, user.accounts.local.password, async (err, success) => {
+    await bcrypt.compare(oldPassword, user.accounts.local.password, async (err, success) => {
       if(err){
         next(err);
       } else {
