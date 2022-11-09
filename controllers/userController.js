@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./../models/user");
+const bcrypt = require("bcryptjs");
 const CreditTransaction = require("./../models/creditTransaction");
 const DebitTransaction = require("./../models/debitTransaction");
 
@@ -120,7 +121,7 @@ exports.profileImage = async (req, res, next) => {
     {
       new: true,
     }
-  ).select("name username profileimage");
+  ).select("name account_number profileimage");
 
   res.status(201).json({
     status: "OK",
@@ -129,3 +130,66 @@ exports.profileImage = async (req, res, next) => {
     },
   });
 };
+
+exports.changeInfo = async (req, res, next) => {
+  const { id, name, email, phoneNumber } = req.body;
+  User.findByIdAndUpdate(
+    id,
+    {
+      name: name,
+      email: email,
+      phoneNumber: phoneNumber
+    },{
+      new: true,
+    }
+  ).then(user => {
+    res.status(201).json({
+      status: "OK",
+      data: {
+        user
+      }
+    });
+  }).catch(err => {
+    res.json({
+      status: "Couldn't Update info"
+    })
+  })
+  
+}
+
+exports.changePassword = async (req, res, next) => {
+  const { id, oldPassword, password, confirmPassword } = req.body;
+
+  const user = await User.findOne({_id : id}).select("+accounts.local.password");
+  
+  if (!user){
+    res.json({ status: "auth error"})
+  }
+  try {
+    // jwt.verify(token, secret);
+    await bcrypt.compare(oldPassword, user.accounts.local.password, async (err, success) => {
+      if(err){
+        next(err);
+      } else if(success) {
+        user.accounts.local.password = password;
+        user.accounts.local.passwordConfirm = confirmPassword;
+        const returnValue = await user.save();
+    
+        console.log('save return' + returnValue.accounts.local);
+    
+        res.json({
+          status: 'success'
+        })
+        
+      } else {
+	res.json({status: "Your old password not correct"})
+      }
+
+    });
+ 
+  } catch (error) {
+    console.log(error);
+    res.json({ status: "Something Went Wrong" });
+  }
+
+}
