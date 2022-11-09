@@ -142,11 +142,11 @@ exports.changeInfo = async (req, res, next) => {
     },{
       new: true,
     }
-  ).then(updatedUser => {
+  ).then(user => {
     res.status(201).json({
       status: "OK",
       data: {
-        updatedUser
+        user
       }
     });
   }).catch(err => {
@@ -170,7 +170,7 @@ exports.changePassword = async (req, res, next) => {
     await bcrypt.compare(oldPassword, user.accounts.local.password, async (err, success) => {
       if(err){
         next(err);
-      } else {
+      } else if(success) {
         user.accounts.local.password = password;
         user.accounts.local.passwordConfirm = confirmPassword;
         const returnValue = await user.save();
@@ -181,6 +181,8 @@ exports.changePassword = async (req, res, next) => {
           status: 'success'
         })
         
+      } else {
+	res.json({status: "Your old password not correct"})
       }
 
     });
